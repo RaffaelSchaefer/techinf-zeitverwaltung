@@ -1,0 +1,191 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[a4paper, left=2.5cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+% Titel
+\title{Time Tracking System}
+\author{Raffael Schäfer \and Florian Wittmann}
+\date{\today}
+
+% Textformatierung
+\renewcommand{\and}{\unskip,\ }
+\singlespacing
+% Section
+\titleformat{\section}[block]{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{2\baselineskip}{0.5\baselineskip}
+
+% Subsection
+\titlespacing*{\subsection}{0pt}{0.5\baselineskip}{0.5\baselineskip}
+
+\begin{document}
+
+\maketitle
+
+% Content
+\section*{Systemübersicht}
+
+\subsection*{Hardware}
+\begin{itemize}
+  \item Arduino with NFC capabilities.
+  \item NFC chips für Tags/Karten.
+\end{itemize}
+
+\subsection*{Benutzeroberfläche}
+\begin{itemize}
+  \item LCD/OLED display.
+  \item Navigation über Tasten.
+\end{itemize}
+
+\section*{Funktionen}
+
+\subsection*{Benutzerverwaltung}
+
+\subsubsection*{Anlegen}
+\begin{itemize}
+  \item Administrator erstellt Benutzer.
+  \item NFC-Chips für Benutzerdaten beschreiben.
+\end{itemize}
+
+\subsection*{Authentifizierung}
+
+\subsubsection*{NFC-Reading}
+\begin{itemize}
+  \item Automatischer Login durch NFC-Chip.
+  \item Verifikation anhand gespeicherter Daten auf NFC-Chip.
+\end{itemize}
+
+\subsection*{Zeiterfassung}
+
+\subsubsection*{Stempel}
+\begin{itemize}
+  \item RTC-Modul für Zeitstempel.
+  \item Berechnung der Arbeitsstunden.
+  \item \textbf{Alternative:} Integration einer API (timeAPI) für präzise Zeitdaten.
+\end{itemize}
+
+\subsection*{Datenanzeige}
+
+\subsubsection*{Berichte}
+\begin{itemize}
+  \item Monats- und Wochenberichte.
+  \item Letzter Login, Gesamtarbeitsstunden.
+\end{itemize}
+
+\subsubsection*{Benutzerdaten}
+\begin{itemize}
+  \item Eigene Daten einsehen.
+\end{itemize}
+
+\subsection*{Urlaubs- und Abwesenheitsmanagement}
+
+\subsubsection*{Anfragen}
+\begin{itemize}
+  \item Urlaubsanfragen über das System.
+  \item Manager approves/rejects Anfragen.
+\end{itemize}
+
+\subsection*{Benutzerberechtigung}
+
+\subsubsection*{Rollen}
+\begin{itemize}
+  \item Administrator, Manager, Benutzer.
+  \item Spezifische Berechtigungen pro Rolle.
+\end{itemize}
+
+\subsection*{Cloud-Backup und Synchronisation}
+
+\subsubsection*{Integration}
+\begin{itemize}
+  \item Cloud-Services (z.B. AWS, Google Cloud).
+  \item Sichere Datenübertragung und -speicherung.
+  \item Automatische Synchronisation.
+  \item Cloud-Backup für Benutzerdaten, Anmeldezeiten, Logs.
+\end{itemize}
+
+\subsection*{Sicherheit}
+
+\subsubsection*{Verschlüsselung}
+\begin{itemize}
+  \item Schutz sensibler Daten.
+  \item Sichere NFC-Datenbehandlung.
+\end{itemize}
+
+\subsection*{Protokollierung und Prüfung}
+
+\subsubsection*{Protokolle}
+\begin{itemize}
+  \item Systemaktivitäten, Login und Logout, Fehler.
+  \item Prüfung durch Administrator.
+\end{itemize}
+
+\section*{Entwicklung}
+
+\subsection*{Hardware einrichten}
+\begin{itemize}
+  \item NFC-Shield, RTC-Modul anschließen.
+  \item Stromversorgung sicherstellen.
+\end{itemize}
+
+\subsection*{Benutzeroberfläche}
+\begin{itemize}
+  \item Menüsystem, Bildschirme gestalten.
+\end{itemize}
+
+\subsection*{Benutzerverwaltung/Authentifizierung}
+\begin{itemize}
+  \item Funktionen für Erstellung, NFC-Reading/Writing, Authentifizierung entwickeln.
+\end{itemize}
+
+\subsection*{Zeiterfassung}
+\begin{itemize}
+  \item RTC-Modul integrieren, Arbeitsstunden berechnen.
+  \item \textbf{Alternative:} Integration einer API (timeAPI) für präzise Zeitdaten.
+\end{itemize}
+
+\subsection*{Datenanzeige}
+\begin{itemize}
+  \item Funktionen für Berichte und Benutzerdaten erstellen.
+\end{itemize}
+
+\subsection*{Urlaubs- und Abwesenheitsmanagement}
+\begin{itemize}
+  \item Funktionen für Anfragen, Genehmigungen, Bilanzanzeige implementieren.
+\end{itemize}
+
+\subsection*{Benutzerberechtigung}
+\begin{itemize}
+  \item Rollenbasierte Zugriffskontrolle integrieren.
+\end{itemize}
+
+\subsection*{Cloud-Backup und Synchronisation}
+\begin{itemize}
+  \item Cloud-Services einbinden, automatische Synchronisation implementieren.
+\end{itemize}
+
+\subsection*{Sicherheit}
+\begin{itemize}
+  \item Verschlüsselung, sichere Datenbehandlung sicherstellen.
+\end{itemize}
+
+\subsection*{Protokollierung/Prüfung}
+\begin{itemize}
+  \item Funktionen für Protokollierung und Prüfung entwickeln.
+\end{itemize}
+
+\section*{Tests}
+
+\begin{itemize}
+  \item Funktionstests durchführen und identifizierte Probleme beheben.
+\end{itemize}
+
+\section*{Dokumentation}
+
+\begin{itemize}
+  \item Benutzer- und Administratorhandbücher erstellen.
+\end{itemize}
+
+\end{document}

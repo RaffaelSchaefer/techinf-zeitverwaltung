@@ -1,0 +1,85 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+\begin{document}
+\section{Funktionen}
+
+\subsection{Benutzerverwaltung}
+
+\subsubsection{Anlegen}
+\begin{itemize}
+  \item Administrator erstellt Benutzer.
+  \item NFC-Chips für Benutzerdaten beschreiben.
+\end{itemize}
+
+\subsection{Authentifizierung}
+
+\subsubsection{NFC-Reading}
+\begin{itemize}
+  \item Automatischer Login durch NFC-Chip.
+  \item Verifikation anhand gespeicherter Daten auf NFC-Chip.
+\end{itemize}
+
+\subsection{Zeiterfassung}
+
+\subsubsection{Stempel}
+\begin{itemize}
+  \item RTC-Modul für Zeitstempel.
+  \item Berechnung der Arbeitsstunden.
+  \item \textbf{Alternative:} Integration einer API (timeAPI) für präzise Zeitdaten.
+\end{itemize}
+
+\subsection{Datenanzeige}
+
+\subsubsection{Berichte}
+\begin{itemize}
+  \item Monats- und Wochenberichte.
+  \item Letzter Login, Gesamtarbeitsstunden.
+\end{itemize}
+
+\subsubsection{Benutzerdaten}
+\begin{itemize}
+  \item Eigene Daten einsehen.
+\end{itemize}
+
+\subsection{Urlaubs- und Abwesenheitsmanagement}
+
+\subsubsection{Anfragen}
+\begin{itemize}
+  \item Urlaubsanfragen über das System.
+  \item Manager approves/rejects Anfragen.
+\end{itemize}
+
+\subsection{Benutzerberechtigung}
+
+\subsubsection{Rollen}
+\begin{itemize}
+  \item Administrator, Manager, Benutzer.
+  \item Spezifische Berechtigungen pro Rolle.
+\end{itemize}
+
+\subsection{Cloud-Backup und Synchronisation}
+
+\subsubsection{Integration}
+\begin{itemize}
+  \item Cloud-Services (z.B. AWS, Google Cloud).
+  \item Sichere Datenübertragung und -speicherung.
+  \item Automatische Synchronisation.
+  \item Cloud-Backup für Benutzerdaten, Anmeldezeiten, Logs.
+\end{itemize}
+
+\subsection{Sicherheit}
+
+\subsubsection{Verschlüsselung}
+\begin{itemize}
+  \item Schutz sensibler Daten.
+  \item Sichere NFC-Datenbehandlung.
+\end{itemize}
+
+\subsection{Protokollierung und Prüfung}
+
+\subsubsection{Protokolle}
+\begin{itemize}
+  \item Systemaktivitäten, Login und Logout, Fehler.
+  \item Prüfung durch Administrator.
+\end{itemize}
+\end{document}
