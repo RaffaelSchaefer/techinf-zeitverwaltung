@@ -88,6 +88,36 @@ def users():
         }
 
 
+@api.route("/user/<user_id>")
+def user(user_id):
+    try:
+        connection = create_db_connection()
+        cursor = create_cursor(connection)
+        cursor.execute("SELECT * FROM users WHERE rowid = " + user_id)
+        row = cursor.fetchall()
+        db_data = {
+            "data": {
+                "user": {
+                    "first_name": row[0][0],
+                    "last_name": row[0][1],
+                    "cards": []
+                }
+            }
+        }
+        cursor.execute(
+            "SELECT * FROM cards, card_ownership WHERE cards.rowid = card_ownership.card_ID AND card_ownership.user_ID = " + user_id)
+        rows = cursor.fetchall()
+        for row in rows:
+            db_data["data"]["user"]["cards"].append({"UID": row[0]})
+        cursor.close()
+        connection.close()
+        return db_data
+    except Exception as e:
+        return {
+            "error": str(e)
+        }
+
+
 def main():
     if (args.reset):
         if click.confirm('Do you want to continue?', default=True):
