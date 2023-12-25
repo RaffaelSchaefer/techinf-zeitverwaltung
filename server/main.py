@@ -66,21 +66,26 @@ def add_demo_data():
 
 @api.route("/users")
 def users():
-    connection = create_db_connection()
-    cursor = create_cursor(connection)
-    cursor.execute("SELECT * FROM users")
-    rows = cursor.fetchall()
-    db_data = {
-        "data": {
-            "users": []
+    try:
+        connection = create_db_connection()
+        cursor = create_cursor(connection)
+        cursor.execute("SELECT * FROM users")
+        rows = cursor.fetchall()
+        db_data = {
+            "data": {
+                "users": []
+            }
         }
-    }
-    for row in rows:
-        db_data["data"]["users"].append(
-            {"first_name": row[0], "last_name": row[1]})
-    cursor.close()
-    connection.close()
-    return db_data
+        for row in rows:
+            db_data["data"]["users"].append(
+                {"first_name": row[0], "last_name": row[1]})
+        cursor.close()
+        connection.close()
+        return db_data
+    except Exception as e:
+        return {
+            "error": str(e)
+        }
 
 
 def main():
