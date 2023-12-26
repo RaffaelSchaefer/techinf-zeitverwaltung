@@ -2,7 +2,7 @@ import sqlite3
 
 
 def create_db_connection(db_name="db.sqlite"):
-    return sqlite3.connect("db.sqlite")
+    return sqlite3.connect(db_name)
 
 
 def create_cursor(connection):

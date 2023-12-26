@@ -71,5 +71,5 @@ def user_update():
     pass
 
 
-def user_delete(user_id):
+def user_delete():
     pass

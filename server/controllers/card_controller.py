@@ -64,5 +64,5 @@ def card_update():
     pass
 
 
-def card_delete(card_id):
+def card_delete():
     pass
