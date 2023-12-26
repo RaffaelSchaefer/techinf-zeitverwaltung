@@ -7,9 +7,10 @@ def user_create():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
         first_name TEXT NOT NULL, 
-        last_name  TEXT NOT NULL
+        last_name  TEXT NOT NULL,
+        PRIMARY KEY (first_name, last_name)
         )
-    """)
+    """)  # TODO Schema needs improvement
     connection.commit()
     close_all(cursor, connection)
 
