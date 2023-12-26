@@ -6,10 +6,10 @@ def user_create():
     cursor = create_cursor(connection)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
-        first_name TEXT NOT NULL, 
-        last_name  TEXT NOT NULL,
-        PRIMARY KEY (first_name, last_name)
-        )
+        ID         INTEGER PRIMARY KEY AUTOINCREMENT,
+        first_name TEXT    NOT NULL, 
+        last_name  TEXT    NOT NULL
+    );
     """)  # TODO Schema needs improvement
     connection.commit()
     close_all(cursor, connection)
@@ -27,6 +27,8 @@ def user_insert(first_name, last_name):
     connection = create_db_connection()
     cursor = create_cursor(connection)
     cursor.execute(
-        "INSERT INTO users (first_name, last_name) VALUES ('"+first_name+"', '"+last_name+"')")
+        "INSERT INTO users (first_name, last_name) VALUES (:first_name, :last_name)",
+        {"first_name": first_name, "last_name": last_name}
+    )
     connection.commit()
     close_all(cursor, connection)

@@ -58,7 +58,7 @@ def grant_ownership():
         try:
             data = request.get_json()
             grant_card_ownership(
-                data["data"]["user_ID"], data["data"]["card_ID"])
+                data["data"]["user_ID"], data["data"]["card_UID"])
             return jsonify(data), 201
         except Exception as e:
             return {

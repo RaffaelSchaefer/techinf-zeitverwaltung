@@ -25,22 +25,25 @@ def card_list():
         }, 400
 
 
-def card_detail(card_id):
+def card_detail(card_UID):
     try:
         connection = create_db_connection()
         cursor = create_cursor(connection)
-        cursor.execute("SELECT * FROM cards WHERE rowid = " + card_id)
+        cursor.execute(
+            "SELECT * FROM cards WHERE UID = :card_UID", {"card_UID": card_UID})
         row = cursor.fetchall()
         db_data = {
             "data": {
                 "card": {
                     "UID": row[0][0],
-                    "OWNER_ID": {}
+                    "OWNER_ID": None
                 }
             }
         }
         cursor.execute(
-            "SELECT user_id FROM card_ownership WHERE card_ownership.card_id = " + card_id)
+            "SELECT user_id FROM card_ownership WHERE card_ownership.card_UID = :card_UID",
+            {"card_UID": card_UID}
+        )
         rows = cursor.fetchall()
         for row in rows:
             db_data["data"]["card"]["OWNER_ID"] = row[0]

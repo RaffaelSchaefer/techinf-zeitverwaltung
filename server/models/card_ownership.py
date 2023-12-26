@@ -6,10 +6,12 @@ def card_ownership_create():
     cursor = create_cursor(connection)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS card_ownership (
-        user_ID, 
-        card_ID UNIQUE, 
-        PRIMARY KEY (user_ID,card_ID)
-        )
+        user_ID  INTEGER NOT NULL, 
+        card_UID INTEGER NOT NULL UNIQUE, 
+        FOREIGN KEY (user_ID)  REFERENCES users(ID),
+        FOREIGN KEY (card_UID) REFERENCES cards(UID),
+        PRIMARY KEY (user_ID, card_UID)
+    );
     """)
     connection.commit()
     close_all(cursor, connection)
@@ -23,10 +25,18 @@ def card_ownership_delete():
     close_all(cursor, connection)
 
 
-def card_ownership_insert(user_ID, card_ID):
+def card_ownership_insert(user_ID, card_UID):
     connection = create_db_connection()
     cursor = create_cursor(connection)
     cursor.execute(
-        "INSERT INTO card_ownership (user_ID, card_ID) VALUES ("+str(user_ID)+", "+str(card_ID)+")")
+        """
+        INSERT INTO card_ownership (user_ID, card_UID)
+        SELECT :user_ID, :card_UID
+        WHERE
+            (SELECT 1 FROM users WHERE ID = :user_ID) IS NOT NULL
+            AND (SELECT 1 FROM cards WHERE UID = :card_UID) IS NOT NULL;
+        """,
+        {"user_ID": user_ID, "card_UID": card_UID}
+    )
     connection.commit()
-    close_all(cursor, connection)
+    close_all(cursor, connection)  # TODO Add Error Message

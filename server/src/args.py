@@ -39,4 +39,4 @@ def reset():
 def add_demo_data():
     card_insert("037F8B97")
     user_insert("Max", "Mustermann")
-    card_ownership_insert(1, 1)
+    card_ownership_insert(1, "037F8B97")
