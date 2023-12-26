@@ -1,4 +1,5 @@
 from src.db import create_db_connection, create_cursor
+from models.card import card_insert
 
 
 def card_list():
@@ -21,7 +22,7 @@ def card_list():
     except Exception as e:
         return {
             "error": str(e)
-        }
+        }, 400
 
 
 def card_detail(card_id):
@@ -49,11 +50,11 @@ def card_detail(card_id):
     except Exception as e:
         return {
             "error": str(e)
-        }
+        }, 400
 
 
-def card_create():
-    pass
+def card_create(UID):
+    card_insert(UID)
 
 
 def card_update():

@@ -1,4 +1,5 @@
 from src.db import create_db_connection, create_cursor
+from models.user import user_insert
 
 
 def user_list():
@@ -21,7 +22,7 @@ def user_list():
     except Exception as e:
         return {
             "error": str(e)
-        }
+        }, 400
 
 
 def user_detail(user_id):
@@ -50,11 +51,11 @@ def user_detail(user_id):
     except Exception as e:
         return {
             "error": str(e)
-        }
+        }, 400
 
 
-def user_create():
-    pass
+def user_create(first_name, last_name):
+    user_insert(first_name, last_name)
 
 
 def user_update():
