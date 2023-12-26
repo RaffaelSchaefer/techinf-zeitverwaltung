@@ -15,7 +15,7 @@ def main():
         init()
     if args.add_demo_data:
         add_demo_data()
-    api.run(debug=args.debug)
+    api.run(debug=args.debug, host=args.address, port=args.port)
 
 
 if __name__ == "__main__":

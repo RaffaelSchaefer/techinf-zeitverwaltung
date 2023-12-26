@@ -18,6 +18,10 @@ parser.add_argument('-add', '--add_demo_data', action='store_true',
                     help="adds Demo Data to the Project")
 parser.add_argument('-d', '--debug', action='store_true',
                     help="starts the Server in debug mode")
+parser.add_argument('-a', '--address', type=str,
+                    help="the ip address the server should run on", default="0.0.0.0")
+parser.add_argument('-p', '--port', type=str,
+                    help="the port the server should run on", default="5000")
 
 args = parser.parse_args()
 
