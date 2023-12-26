@@ -1,7 +1,6 @@
 import argparse
 import click
 
-from src.db import create_db_connection, create_cursor, close_all
 from models.card import card_create, card_delete, card_insert
 from models.user import user_create, user_delete, user_insert
 from models.card_ownership import card_ownership_create, card_ownership_delete, card_ownership_insert
@@ -24,30 +23,20 @@ args = parser.parse_args()
 
 
 def init():
-    connection = create_db_connection()
-    cursor = create_cursor(connection)
-    cursor.execute(card_create)
-    cursor.execute(user_create)
-    cursor.execute(card_ownership_create)
-    close_all(cursor, connection)
+    card_create()
+    user_create()
+    card_ownership_create()
 
 
 def reset():
     if click.confirm('Do you want to continue?', default=True):
-        connection = create_db_connection()
-        cursor = create_cursor(connection)
-        cursor.execute(card_ownership_delete)
-        cursor.execute(user_delete)
-        cursor.execute(card_delete)
-        close_all(cursor, connection)
+        card_ownership_delete()
+        user_delete()
+        card_delete()
         exit()
 
 
 def add_demo_data():
-    connection = create_db_connection()
-    cursor = create_cursor(connection)
-    cursor.execute(card_insert("037F8B97"))
-    cursor.execute(user_insert("Max", "Mustermann"))
-    cursor.execute(card_ownership_insert(1, 1))
-    connection.commit()
-    close_all(cursor, connection)
+    card_insert("037F8B97")
+    user_insert("Max", "Mustermann")
+    card_ownership_insert(1, 1)
