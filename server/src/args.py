@@ -2,6 +2,9 @@ import argparse
 import click
 
 from src.db import create_db_connection, create_cursor, close_all
+from models.card import card_create, card_delete, card_insert
+from models.user import user_create, user_delete, user_insert
+from models.card_ownership import card_ownership_create, card_ownership_delete, card_ownership_insert
 
 parser = argparse.ArgumentParser(
     prog='Zeitverwaltung Server',
@@ -23,12 +26,9 @@ args = parser.parse_args()
 def init():
     connection = create_db_connection()
     cursor = create_cursor(connection)
-    cursor.execute(
-        "CREATE TABLE IF NOT EXISTS cards (UID TEXT PRIMARY KEY NOT NULL)")
-    cursor.execute(
-        "CREATE TABLE IF NOT EXISTS users (first_name TEXT NOT NULL, last_name TEXT NOT NULL)")
-    cursor.execute(
-        "CREATE TABLE IF NOT EXISTS card_ownership (user_ID, card_ID UNIQUE, PRIMARY KEY (user_ID,card_ID))")
+    cursor.execute(card_create)
+    cursor.execute(user_create)
+    cursor.execute(card_ownership_create)
     close_all(cursor, connection)
 
 
@@ -36,9 +36,9 @@ def reset():
     if click.confirm('Do you want to continue?', default=True):
         connection = create_db_connection()
         cursor = create_cursor(connection)
-        cursor.execute("DROP TABLE card_ownership")
-        cursor.execute("DROP TABLE users")
-        cursor.execute("DROP TABLE cards")
+        cursor.execute(card_ownership_delete)
+        cursor.execute(user_delete)
+        cursor.execute(card_delete)
         close_all(cursor, connection)
         exit()
 
@@ -46,10 +46,8 @@ def reset():
 def add_demo_data():
     connection = create_db_connection()
     cursor = create_cursor(connection)
-    cursor.execute("INSERT INTO cards (UID) VALUES ('037F8B97')")
-    cursor.execute(
-        "INSERT INTO users (first_name, last_name) VALUES ('Max', 'Mustermann')")
-    cursor.execute(
-        "INSERT INTO card_ownership (user_ID, card_ID) VALUES (1, 1)")
+    cursor.execute(card_insert("037F8B97"))
+    cursor.execute(user_insert("Max", "Mustermann"))
+    cursor.execute(card_ownership_insert(1, 1))
     connection.commit()
     close_all(cursor, connection)
