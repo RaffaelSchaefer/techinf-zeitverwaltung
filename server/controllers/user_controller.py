@@ -43,6 +43,7 @@ def user_detail(user_id):
                     "ID": row[0][0],
                     "first_name": row[0][1],
                     "last_name": row[0][2],
+                    "active": True if row[0][3] == 1 else False,
                     "cards": []
                 }
             }
