@@ -1,4 +1,9 @@
 .DS_Store
+.vscode
+.idea
+.venv
+.env
 export
 ArduinoOutput
-.env
+__pycache__
+server/db.sqlite
