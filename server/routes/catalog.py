@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
-from controllers.user_controller import user_list, user_detail, user_create
+
 from controllers.card_controller import card_list, card_detail, card_create, toggle_card
 from controllers.ownership_controller import grant_card_ownership
+from controllers.user_controller import user_list, user_detail, user_create
 
 api = Flask(__name__)
 

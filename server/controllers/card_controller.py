@@ -1,5 +1,5 @@
-from src.db import create_db_connection, create_cursor, close_all
 from models.card import card_insert
+from src.db import create_db_connection, create_cursor, close_all
 
 
 def card_list():

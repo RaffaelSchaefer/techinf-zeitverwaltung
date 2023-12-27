@@ -1,9 +1,10 @@
 import argparse
+
 import click
 
 from models.card import card_create, card_delete, card_insert
-from models.user import user_create, user_delete, user_insert
 from models.card_ownership import card_ownership_create, card_ownership_delete, card_ownership_insert
+from models.user import user_create, user_delete, user_insert
 
 parser = argparse.ArgumentParser(
     prog='Zeitverwaltung Server',

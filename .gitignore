@@ -2,3 +2,5 @@
 export
 server/db.sqlite
 __pycache__
+.vscode
+.idea

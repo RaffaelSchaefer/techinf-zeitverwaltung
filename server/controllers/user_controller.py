@@ -1,5 +1,5 @@
-from src.db import create_db_connection, create_cursor
 from models.user import user_insert
+from src.db import create_db_connection, create_cursor
 
 
 def user_list():
