@@ -1,4 +1,4 @@
-from src.db import create_db_connection, create_cursor
+from src.db import create_db_connection, create_cursor, close_all
 from models.card import card_insert
 
 
@@ -16,8 +16,7 @@ def card_list():
         for row in rows:
             db_data["data"]["cards"].append(
                 {"UID": row[0]})
-        cursor.close()
-        connection.close()
+        close_all(cursor, connection)
         return db_data
     except Exception as e:
         return {
@@ -47,13 +46,30 @@ def card_detail(card_UID):
         rows = cursor.fetchall()
         for row in rows:
             db_data["data"]["card"]["OWNER_ID"] = row[0]
-        cursor.close()
-        connection.close()
+        close_all(cursor, connection)
         return db_data
     except Exception as e:
         return {
             "error": str(e)
         }, 400
+
+
+def toggle_card(UID):
+    connection = create_db_connection()
+    cursor = create_cursor(connection)
+    cursor.execute(
+        """
+        UPDATE users
+        SET    logged_in = CASE WHEN logged_in = 0 THEN 1
+                                ELSE 0
+                            END
+        FROM  card_ownership
+        WHERE users.ID = card_ownership.user_ID
+        AND card_ownership.card_UID = :UID;
+        """, {"UID": UID}
+    )
+    connection.commit()
+    close_all(cursor, connection)
 
 
 def card_create(UID):

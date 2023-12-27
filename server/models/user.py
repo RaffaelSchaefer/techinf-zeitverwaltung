@@ -8,7 +8,9 @@ def user_create():
     CREATE TABLE IF NOT EXISTS users (
         ID         INTEGER PRIMARY KEY AUTOINCREMENT,
         first_name TEXT    NOT NULL, 
-        last_name  TEXT    NOT NULL
+        last_name  TEXT    NOT NULL,
+        logged_in  INTEGER NOT NULL DEFAULT 0,
+        CHECK (logged_in IN (0, 1))
     );
     """)  # TODO Schema needs improvement
     connection.commit()

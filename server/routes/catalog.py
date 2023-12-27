@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from controllers.user_controller import user_list, user_detail, user_create
-from controllers.card_controller import card_list, card_detail, card_create
+from controllers.card_controller import card_list, card_detail, card_create, toggle_card
 from controllers.ownership_controller import grant_card_ownership
 
 api = Flask(__name__)
@@ -59,6 +59,19 @@ def grant_ownership():
             data = request.get_json()
             grant_card_ownership(
                 data["data"]["user_ID"], data["data"]["card_UID"])
+            return jsonify(data), 201
+        except Exception as e:
+            return {
+                "error": str(e)
+            }, 400
+
+
+@api.route("/log", methods=["POST"])
+def log():
+    if request.method == "POST":
+        try:
+            data = request.get_json()
+            toggle_card(data["data"]["UID"])
             return jsonify(data), 201
         except Exception as e:
             return {
