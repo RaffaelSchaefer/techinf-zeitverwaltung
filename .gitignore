@@ -1,7 +1,9 @@
 .DS_Store
-export
-server/db.sqlite
-__pycache__
 .vscode
 .idea
 .venv
+.env
+export
+ArduinoOutput
+__pycache__
+server/db.sqlite
