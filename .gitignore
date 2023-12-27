@@ -1,2 +1,7 @@
 .DS_Store
 export
+server/db.sqlite
+__pycache__
+.vscode
+.idea
+.venv
