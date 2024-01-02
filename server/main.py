@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 
 from routes.catalog import api
 from src.args import args, reset, init, add_demo_data
@@ -9,6 +10,7 @@ if not os.path.isfile("./db.sqlite"):
 
 
 def main():
+    load_dotenv()
     if args.reset:
         reset()
     if args.init:

@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 
+from src.util import check_key
 from controllers.card_controller import card_list, card_detail, card_create, toggle_card
 from controllers.ownership_controller import grant_card_ownership
 from controllers.user_controller import user_list, user_detail, user_create
@@ -22,6 +23,8 @@ def create_user():
     if request.method == "POST":
         try:
             data = request.get_json()
+            if check_key(data["key"]) is False:
+                return {"error": "Incorrect API Key"}, 401
             user_create(data["data"]["first_name"], data["data"]["last_name"])
             return jsonify(data), 201
         except Exception as e:
@@ -45,6 +48,8 @@ def create_card():
     if request.method == "POST":
         try:
             data = request.get_json()
+            if check_key(data["key"]) is False:
+                return {"error": "Incorrect API Key"}, 401
             card_create(data["data"]["UID"])
             return jsonify(data), 201
         except Exception as e:
@@ -58,6 +63,8 @@ def grant_ownership():
     if request.method == "POST":
         try:
             data = request.get_json()
+            if check_key(data["key"]) is False:
+                return {"error": "Incorrect API Key"}, 401
             grant_card_ownership(
                 data["data"]["user_ID"], data["data"]["card_UID"])
             return jsonify(data), 201
@@ -72,6 +79,8 @@ def log():
     if request.method == "POST":
         try:
             data = request.get_json()
+            if check_key(data["key"]) is False:
+                return {"error": "Incorrect API Key"}, 401
             toggle_card(data["data"]["UID"])
             return jsonify(data), 201
         except Exception as e:
