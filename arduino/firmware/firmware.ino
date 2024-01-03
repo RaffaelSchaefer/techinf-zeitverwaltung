@@ -57,7 +57,7 @@ void loop()
       http.begin(client, serverPath.c_str());
       http.addHeader("Content-Type", "application/json");
 
-      int httpResponseCode = http.POST("{\"data\":{\"UID\": \"" + uid + "\"}}");
+      int httpResponseCode = http.POST("{\"key\": \"" + String(API_KEY) + "\",\"data\":{\"UID\": \"" + uid + "\"}}");
 
       if (httpResponseCode > 0)
       {
