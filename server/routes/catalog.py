@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect, url_for
 
 from src.util import check_key
 from controllers.card_controller import card_list, card_detail, card_create, toggle_card
@@ -7,6 +7,13 @@ from controllers.user_controller import user_list, user_detail, user_create
 
 api = Flask(__name__)
 
+@api.route("/")
+def index():
+    return redirect(url_for('site'))
+
+@api.route("/site")
+def site():
+    return
 
 @api.route("/users")
 def users():
