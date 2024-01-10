@@ -7,7 +7,6 @@ h2 List of all Users
 if user_data["data"]["users"]
     ol
     each user in user_data["data"]["users"]
-        li
-            p #{user["first_name"]} #{user["last_name"]}
+        li #{user["first_name"]} #{user["last_name"]}
 else
     p There are no Users
