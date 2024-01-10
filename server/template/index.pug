@@ -1,0 +1,12 @@
+include include/head.pug
+
+h1 Hello World
+
+h2 List of all Users
+
+if user_data["data"]["users"]
+    ol
+    each user in user_data["data"]["users"]
+        li #{user["first_name"]} #{user["last_name"]}
+else
+    p There are no Users

@@ -43,10 +43,10 @@ def reset():
 
 
 def add_demo_data():
-    card_insert("83 45 1b 0a")
-    card_insert("03 7f 8b 97")
+    card_insert("83451ba")
+    card_insert("37f8b97")
     user_insert("John", "Doe")
     user_insert("Jane", "Doe")
-    card_ownership_insert(1, "83 45 1b 0a")
-    card_ownership_insert(2, "03 7f 8b 97")
+    card_ownership_insert(1, "83451ba")
+    card_ownership_insert(2, "37f8b97")
     exit()

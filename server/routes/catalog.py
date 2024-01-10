@@ -1,11 +1,30 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect, url_for, render_template
 
 from src.util import check_key
 from controllers.card_controller import card_list, card_detail, card_create, toggle_card
 from controllers.ownership_controller import grant_card_ownership
 from controllers.user_controller import user_list, user_detail, user_create
 
-api = Flask(__name__)
+api = Flask(__name__, template_folder="../template", static_folder="../static")
+api.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
+
+
+@api.route("/")
+def index():
+    return redirect(url_for('site'))
+
+
+@api.errorhandler(404)
+def not_found(e):
+    return render_template("404.pug", title="Page not found")
+
+
+@api.route("/site")
+def site():
+    try:
+        return render_template('index.pug', title="Home", user_data=user_list())
+    except Exception as e:
+        return render_template('error.pug', title="Error", code=400, msg=str(e))
 
 
 @api.route("/users")
