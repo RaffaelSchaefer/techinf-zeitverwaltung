@@ -31,6 +31,7 @@ def init():
     card_create()
     user_create()
     card_ownership_create()
+    exit()
 
 
 def reset():
@@ -48,3 +49,4 @@ def add_demo_data():
     user_insert("Jane", "Doe")
     card_ownership_insert(1, "83 45 1b 0a")
     card_ownership_insert(2, "03 7f 8b 97")
+    exit()
