@@ -1,0 +1,24 @@
+extends include/layout.pug
+
+block content
+    h1 #{user_data["data"]["user"]["first_name"]} #{user_data["data"]["user"]["last_name"]}
+
+    ul
+        li ID: #{user_data["data"]["user"]["ID"]}
+        li
+            if user_data["data"]["active"]
+                p Status: active
+            else
+                p Status: passiv
+    
+    h2 Cards
+    if user_data["data"]["user"]["cards"]
+        ol
+            each card in user_data["data"]["user"]["cards"]
+                li UID: 
+                    a(href=url_for("card", card_id=card["UID"]))= card["UID"]
+    else
+        p User has no active Cards
+    a.big_btn.grant(href=url_for("grant_ownership")) Grant Ownership
+    a.big_btn.new_form(href=url_for("update_user", user_id=user_data["data"]["user"]["ID"])) Update User
+    a.big_btn.remove(href=url_for("delete_user", user_id=user_data["data"]["user"]["ID"])) Remove User

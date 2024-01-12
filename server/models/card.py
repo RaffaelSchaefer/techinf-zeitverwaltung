@@ -27,3 +27,28 @@ def card_insert(UID):
     cursor.execute("INSERT INTO cards (UID) VALUES (:UID)", {"UID": UID})
     connection.commit()
     close_all(cursor, connection)
+
+
+def remove_card(UID):
+    connection = create_db_connection()
+    cursor = create_cursor(connection)
+    cursor.execute("PRAGMA foreign_keys=ON;")
+    cursor.execute("""
+    DELETE FROM cards
+    WHERE UID = :card_UID;
+    """, {"card_UID": UID})
+    connection.commit()
+    close_all(cursor, connection)
+
+
+def update_card(new_uid, card_uid):
+    connection = create_db_connection()
+    cursor = create_cursor(connection)
+    cursor.execute("PRAGMA foreign_keys=ON;")
+    cursor.execute("""
+        UPDATE cards
+        SET UID = :new_uid
+        WHERE UID = :card_uid;
+        """, {"card_uid": card_uid, "new_uid": new_uid})
+    connection.commit()
+    close_all(cursor, connection)

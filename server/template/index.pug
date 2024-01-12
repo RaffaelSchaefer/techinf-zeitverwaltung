@@ -1,12 +1,9 @@
-include include/head.pug
+extends include/layout.pug
 
-h1 Hello World
+block content
+    h1 Home
 
-h2 List of all Users
+    h2 Stats
 
-if user_data["data"]["users"]
-    ol
-    each user in user_data["data"]["users"]
-        li #{user["first_name"]} #{user["last_name"]}
-else
-    p There are no Users
+    p Users: #{users}
+    p Cards: #{cards}

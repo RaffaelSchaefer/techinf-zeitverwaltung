@@ -8,14 +8,24 @@ def card_ownership_create():
     CREATE TABLE IF NOT EXISTS card_ownership (
         user_ID  INTEGER NOT NULL,
         card_UID INTEGER NOT NULL UNIQUE,
-        FOREIGN KEY (user_ID)  REFERENCES users(ID),
-        FOREIGN KEY (card_UID) REFERENCES cards(UID),
+        FOREIGN KEY (user_ID)  REFERENCES users(ID)  ON DELETE CASCADE,
+        FOREIGN KEY (card_UID) REFERENCES cards(UID) ON DELETE CASCADE ON UPDATE CASCADE,
         PRIMARY KEY (user_ID, card_UID)
     );
     """)
     connection.commit()
     close_all(cursor, connection)
 
+def remove_card_ownership(card_uid):
+    connection = create_db_connection()
+    cursor = create_cursor(connection)
+    cursor.execute("PRAGMA foreign_keys=ON;")
+    cursor.execute("""
+    DELETE FROM card_ownership
+    WHERE card_UID = :UID;
+    """, {"UID": card_uid})
+    connection.commit()
+    close_all(cursor, connection)
 
 def card_ownership_delete():
     connection = create_db_connection()

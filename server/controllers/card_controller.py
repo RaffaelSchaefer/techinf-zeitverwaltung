@@ -1,4 +1,4 @@
-from models.card import card_insert
+from models.card import card_insert, remove_card, update_card
 from src.db import create_db_connection, create_cursor, close_all
 
 
@@ -23,6 +23,29 @@ def card_list():
             "error": str(e)
         }, 400
 
+def available_cards():
+    try:
+        connection = create_db_connection()
+        cursor = create_cursor(connection)
+        cursor.execute("""
+        SELECT * FROM cards
+        WHERE UID NOT IN (SELECT card_UID FROM card_ownership);
+        """)
+        rows = cursor.fetchall()
+        db_data = {
+            "data": {
+                "cards": []
+            }
+        }
+        for row in rows:
+            db_data["data"]["cards"].append(
+                {"UID": row[0]})
+        close_all(cursor, connection)
+        return db_data
+    except Exception as e:
+        return {
+            "error": str(e)
+        }, 400
 
 def card_detail(card_UID):
     try:
@@ -76,9 +99,9 @@ def card_create(UID):
     card_insert(UID)
 
 
-def card_update():
-    pass
+def card_update(new_uid, card_uid):
+    update_card(new_uid, card_uid)
 
 
-def card_delete():
-    pass
+def card_delete(UID):
+    remove_card(UID)

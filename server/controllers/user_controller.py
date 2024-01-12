@@ -1,4 +1,4 @@
-from models.user import user_insert
+from models.user import user_insert, remove_user, update_user
 from src.db import create_db_connection, create_cursor
 
 
@@ -68,9 +68,9 @@ def user_create(first_name, last_name):
     user_insert(first_name, last_name)
 
 
-def user_update():
-    pass
+def user_update(first_name, last_name, user_id):
+    update_user(first_name, last_name, user_id)
 
 
-def user_delete():
-    pass
+def user_delete(user_id):
+    remove_user(user_id)

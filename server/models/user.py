@@ -12,7 +12,19 @@ def user_create():
         logged_in  INTEGER NOT NULL DEFAULT 0,
         CHECK (logged_in IN (0, 1))
     );
-    """)  # TODO Schema needs improvement
+    """)
+    connection.commit()
+    close_all(cursor, connection)
+
+
+def remove_user(user_id):
+    connection = create_db_connection()
+    cursor = create_cursor(connection)
+    cursor.execute("PRAGMA foreign_keys=ON;")
+    cursor.execute("""
+    DELETE FROM users
+    WHERE ID = :user_id;
+    """, {"user_id": user_id})
     connection.commit()
     close_all(cursor, connection)
 
@@ -32,5 +44,17 @@ def user_insert(first_name, last_name):
         "INSERT INTO users (first_name, last_name) VALUES (:first_name, :last_name)",
         {"first_name": first_name, "last_name": last_name}
     )
+    connection.commit()
+    close_all(cursor, connection)
+
+
+def update_user(first_name, last_name, user_id):
+    connection = create_db_connection()
+    cursor = create_cursor(connection)
+    cursor.execute("""
+        UPDATE users
+        SET first_name = :first_name, last_name = :last_name
+        WHERE ID = :user_id;
+        """, {"first_name": first_name, "last_name": last_name, "user_id": user_id})
     connection.commit()
     close_all(cursor, connection)
