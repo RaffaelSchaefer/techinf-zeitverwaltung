@@ -3,15 +3,19 @@ extends include/layout.pug
 block content
     h1= title
 
-    form(method='POST')
-        label(for="user_ID") Users
-        select#user_ID(name="user_ID")
-            each user in user_data["data"]["users"]
-                option(value= user["ID"]) #{user["first_name"]} #{user["last_name"]}
-        br
-        label(for="card_UID") Card UID
-        select#card_UID(name="card_UID")
-            each card in card_data["data"]["cards"]
-                option(value= card["UID"])= card["UID"]
-        br
-        button(type="submit") Grant Ownership
+    if card_data["data"]["cards"]
+        form(method='POST')
+            label(for="user_ID") Users
+            select#user_ID(name="user_ID")
+                each user in user_data["data"]["users"]
+                    option(value= user["ID"]) #{user["first_name"]} #{user["last_name"]}
+            br
+            label(for="card_UID") Card UID
+            select#card_UID(name="card_UID")
+                each card in card_data["data"]["cards"]
+                    option(value= card["UID"])= card["UID"]
+            br
+            button(type="submit") Grant Ownership
+    else 
+        p(style="margin-bottom: 20px;") No Cards available
+        a.big_btn.new_form(href=url_for("create_card")) Register a new card

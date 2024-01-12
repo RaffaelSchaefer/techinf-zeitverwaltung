@@ -1,9 +1,10 @@
+# TODO Create update paths
 from flask import Flask, request, jsonify, redirect, url_for, render_template
 
 from src.util import check_key
-from controllers.card_controller import card_list, card_detail, card_create, toggle_card
-from controllers.ownership_controller import grant_card_ownership
-from controllers.user_controller import user_list, user_detail, user_create
+from controllers.card_controller import card_list, card_detail, card_create, card_delete, toggle_card, available_cards
+from controllers.ownership_controller import grant_card_ownership, card_ownership_remove
+from controllers.user_controller import user_list, user_detail, user_create, user_delete
 
 api = Flask(__name__, template_folder="../template", static_folder="../static")
 api.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
@@ -22,7 +23,7 @@ def index():
 @api.route("/site")
 def site():
     try:
-        return render_template('index.pug', title="Home")
+        return render_template('index.pug', title="Home", users=len(user_list()["data"]["users"]), cards=len(card_list()["data"]["cards"]))
     except Exception as e:
         return render_template('error.pug', title="Error", code=400, msg=str(e))
 
@@ -56,6 +57,20 @@ def create_user():
         return render_template('error.pug', title="Error", code=400, msg=str(e))
 
 
+@api.route("/delete-user/<user_id>", methods=["Get", "Post"])
+def delete_user(user_id):
+    try:
+        if request.method == "POST":
+            data = request.form
+            if data["confirmation"] == "1":
+                user_delete(user_id)
+            return redirect(url_for('users'))
+        elif request.method == "GET":
+            return render_template('confirm.pug', title="Delete User")
+    except Exception as e:
+        return render_template('error.pug', title="Error", code=400, msg=str(e))
+
+
 @api.route("/cards")
 def cards():
     try:
@@ -67,7 +82,7 @@ def cards():
 @api.route("/card/<card_id>")
 def card(card_id):
     try:
-        return render_template('card_detail.pug', title="Card Details", card_data=card_detail(card_id))
+        return render_template('card_detail.pug', title="Card Details", card_data=card_detail(card_id), owner_detail=user_detail(card_detail(card_id)["data"]["card"]["OWNER_ID"]))
     except Exception as e:
         return render_template('error.pug', title="Error", code=400, msg=str(e))
 
@@ -85,6 +100,20 @@ def create_card():
         return render_template('error.pug', title="Error", code=400, msg=str(e))
 
 
+@api.route("/delete-card/<card_id>", methods=["Get", "Post"])
+def delete_card(card_id):
+    try:
+        if request.method == "POST":
+            data = request.form
+            if data["confirmation"] == "1":
+                card_delete(card_id)
+            return redirect(url_for('cards'))
+        elif request.method == "GET":
+            return render_template('confirm.pug', title="Delete Card")
+    except Exception as e:
+        return render_template('error.pug', title="Error", code=400, msg=str(e))
+
+
 @api.route("/grant-ownership", methods=["GET", "POST"])
 def grant_ownership():
     try:
@@ -93,7 +122,21 @@ def grant_ownership():
             grant_card_ownership(data["user_ID"], data["card_UID"])
             return redirect(url_for('user', user_id=data["user_ID"]))
         elif request.method == "GET":
-            return render_template('grant_ownership.pug', title="Grant Ownership", user_data=user_list(), card_data=card_list())
+            return render_template('grant_ownership.pug', title="Grant Ownership", user_data=user_list(), card_data=available_cards())
+    except Exception as e:
+        return render_template('error.pug', title="Error", code=400, msg=str(e))
+
+
+@api.route("/remove-ownership/<card_id>", methods=["GET", "POST"])
+def remove_ownership(card_id):
+    try:
+        if request.method == "POST":
+            data = request.form
+            if data["confirmation"] == "1":
+                card_ownership_remove(card_id)
+            return redirect(url_for('card', card_id=card_id))
+        elif request.method == "GET":
+            return render_template('confirm.pug', title="Remove Ownership")
     except Exception as e:
         return render_template('error.pug', title="Error", code=400, msg=str(e))
 

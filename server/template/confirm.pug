@@ -1,0 +1,11 @@
+extends include/layout.pug
+
+block content
+    h1= title
+
+    p
+        strong Do you want to take this action?
+
+    form(method="POST") 
+        button.grant(type="submit", name="confirmation", value="0") No
+        button.remove(type="submit", name="confirmation", value="1") Yes

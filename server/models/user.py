@@ -12,10 +12,21 @@ def user_create():
         logged_in  INTEGER NOT NULL DEFAULT 0,
         CHECK (logged_in IN (0, 1))
     );
-    """)  # TODO Schema needs improvement
+    """)
     connection.commit()
     close_all(cursor, connection)
 
+
+def remove_user(user_id):
+    connection = create_db_connection()
+    cursor = create_cursor(connection)
+    cursor.execute("PRAGMA foreign_keys=ON;")
+    cursor.execute("""
+    DELETE FROM users
+    WHERE ID = :user_id;
+    """, {"user_id": user_id})
+    connection.commit()
+    close_all(cursor, connection)
 
 def user_delete():
     connection = create_db_connection()

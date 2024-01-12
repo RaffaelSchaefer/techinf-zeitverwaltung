@@ -20,3 +20,4 @@ block content
     else
         p User has no active Cards
     a.big_btn.grant(href=url_for("grant_ownership")) Grant Ownership
+    a.big_btn.remove(href=url_for("delete_user", user_id=user_data["data"]["user"]["ID"])) Remove User
