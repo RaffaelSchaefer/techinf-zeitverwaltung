@@ -1,4 +1,4 @@
-from models.card import card_insert, remove_card
+from models.card import card_insert, remove_card, update_card
 from src.db import create_db_connection, create_cursor, close_all
 
 
@@ -99,8 +99,8 @@ def card_create(UID):
     card_insert(UID)
 
 
-def card_update():
-    pass
+def card_update(new_uid, card_uid):
+    update_card(new_uid, card_uid)
 
 
 def card_delete(UID):

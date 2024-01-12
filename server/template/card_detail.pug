@@ -10,4 +10,5 @@ block content
         a.big_btn.remove(href=url_for("remove_ownership", card_id=card_data["data"]["card"]["UID"]) style="margin-top: 20px;") Remove Ownership
     else
         a.big_btn.grant(href= url_for("grant_ownership"), style="margin-top: 20px;") Grant Ownership
+    a.big_btn.new_form(href= url_for("update_card", card_id=card_data["data"]["card"]["UID"])) Update Card
     a.big_btn.remove(href= url_for("delete_card", card_id=card_data["data"]["card"]["UID"])) Remove Card

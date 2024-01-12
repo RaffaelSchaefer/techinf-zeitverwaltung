@@ -1,10 +1,9 @@
-# TODO Create update paths
 from flask import Flask, request, jsonify, redirect, url_for, render_template
 
 from src.util import check_key
-from controllers.card_controller import card_list, card_detail, card_create, card_delete, toggle_card, available_cards
+from controllers.card_controller import card_list, card_detail, card_create, card_delete, toggle_card, available_cards, card_update
 from controllers.ownership_controller import grant_card_ownership, card_ownership_remove
-from controllers.user_controller import user_list, user_detail, user_create, user_delete
+from controllers.user_controller import user_list, user_detail, user_create, user_delete, user_update
 
 api = Flask(__name__, template_folder="../template", static_folder="../static")
 api.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
@@ -71,6 +70,19 @@ def delete_user(user_id):
         return render_template('error.pug', title="Error", code=400, msg=str(e))
 
 
+@api.route("/update-user/<user_id>", methods=["Get", "Post"])
+def update_user(user_id):
+    try:
+        if request.method == "POST":
+            data = request.form
+            user_update(data["first_name"], data["last_name"], user_id)
+            return redirect(url_for('user', user_id=user_id))
+        elif request.method == "GET":
+            return render_template('update_user.pug', title="Update User", first_name=user_detail(user_id)["data"]["user"]["first_name"], last_name=user_detail(user_id)["data"]["user"]["last_name"])
+    except Exception as e:
+        return render_template('error.pug', title="Error", code=400, msg=str(e))
+
+
 @api.route("/cards")
 def cards():
     try:
@@ -110,6 +122,19 @@ def delete_card(card_id):
             return redirect(url_for('cards'))
         elif request.method == "GET":
             return render_template('confirm.pug', title="Delete Card")
+    except Exception as e:
+        return render_template('error.pug', title="Error", code=400, msg=str(e))
+
+
+@api.route("/update-card/<card_id>", methods=["Get", "Post"])
+def update_card(card_id):
+    try:
+        if request.method == "POST":
+            data = request.form
+            card_update(data["new_id"], card_id)
+            return redirect(url_for('card', card_id=data["new_id"]))
+        elif request.method == "GET":
+            return render_template('update_card.pug', title="Update Card", card_id=card_id)
     except Exception as e:
         return render_template('error.pug', title="Error", code=400, msg=str(e))
 
