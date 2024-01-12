@@ -1,9 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+ul li a {
+    text-decoration: none;
+    color: black;
 }
 
 .error {
     color: red;
+}
+
+.sidebar {
+    background-color: darkgray;
+    width: 150px;
+    height: 100vh;
+}
+
+.sidebar li {
+    padding-top: 10px;
+    list-style-type: none;
+}
+
+.sidebar li a {
+    text-decoration: none;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+}
+
+a.big_btn{
+    padding: 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: white;
+    font-size: x-large;
+    font-weight: bolder;
+    border-radius: 15px;
+}
+
+a.new_form {
+    background-color: lightskyblue;
+}
+
+a.grant {
+    background-color: lightgreen;
+}
+
+a.remove {
+    background-color: lightcoral;
+}
+
+.wrapper {
+    margin-left: 25px;
 }

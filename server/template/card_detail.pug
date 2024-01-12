@@ -1,0 +1,11 @@
+extends include/layout.pug
+
+block content
+    h1 Card Details
+
+    p UID: #{card_data["data"]["card"]["UID"]}
+    if card_data["data"]["card"]["OWNER_ID"]
+        a.big_btn.new_form(href=url_for("user", user_id=card_data["data"]["card"]["OWNER_ID"])) Show Owner
+        a.big_btn.remove(href="#", style="margin-top: 20px;") Remove Ownership
+    else
+        a.big_btn.grant(href=url_for("grant_ownership"), style="margin-top: 20px;") Grant Ownership

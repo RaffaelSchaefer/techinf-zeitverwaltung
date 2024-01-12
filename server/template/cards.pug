@@ -1,0 +1,14 @@
+extends include/layout.pug
+
+block content
+    h1= title
+
+    if card_data["data"]["cards"]
+        ul(style="margin-bottom: 20px;")
+            each card in card_data["data"]["cards"]
+                li
+                    a(href=url_for("card", card_id=card["UID"]))= card["UID"]
+    else
+        p There are no Cards
+
+    a.big_btn.new_form(href=url_for("create_card")) Register a new card

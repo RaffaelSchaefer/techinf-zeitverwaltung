@@ -1,0 +1,13 @@
+extends include/layout.pug
+
+block content
+    h1 Create a new User 
+
+    form(method='POST')
+        label(for="first_name") First Name
+        input#first_name(type="text", placeholder="Enter first name" name="first_name" required)
+        br
+        label(for="last_name") Last Name
+        input#last_name(type="text", placeholder="Enter last name" name="last_name" required)
+        br
+        button(type="submit") Create User
