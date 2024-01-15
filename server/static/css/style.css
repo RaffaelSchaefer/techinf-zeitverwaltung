@@ -34,7 +34,33 @@ ul li a {
     font-weight: bold;
 }
 
-a.big_btn{
+div.split_container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+}
+
+div.split_container div img {
+    border-radius: 20px;
+    height: 100px;
+}
+
+div.split_container ul {
+    margin-right: 20px;
+}
+
+button.grant,
+button.remove,
+button.new_form {
+    font-family: "Roboto", sans-serif;
+    border: none;
+}
+
+a.big_btn,
+button.grant,
+button.remove,
+button.new_form {
     padding: 10px;
     margin-right: 10px;
     text-decoration: none;
@@ -44,18 +70,59 @@ a.big_btn{
     border-radius: 15px;
 }
 
-a.new_form {
+a.new_form,
+button.new_form {
     background-color: lightskyblue;
 }
 
-a.grant {
+a.grant,
+button.grant {
     background-color: lightgreen;
 }
 
-a.remove {
+a.remove,
+button.remove {
     background-color: lightcoral;
 }
 
-.wrapper {
+button.new_form {
+    position: fixed;
+    bottom: 0%;
+    margin-bottom: 15px;
+}
+
+p.online,
+p.offline {
+    margin-top: 5px;
+    margin-bottom: 0;
+    color: white;
+    font-size: large;
+    font-weight: bolder;
+    padding: 5px;
+    border-radius: 50px;
+    text-align: center;
+}
+
+p.online {
+    background-color: lightgreen;
+}
+
+p.offline {
+    background-color: lightcoral;
+}
+
+div.wrapper {
+    height: 100vh;
+}
+
+div.wrapper div.content {
     margin-left: 25px;
+}
+
+div.wrapper div.buttons {
+    height: 60px;
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    padding-left: 25px;
 }

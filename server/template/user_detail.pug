@@ -2,23 +2,28 @@ extends include/layout.pug
 
 block content
     h1 #{user_data["data"]["user"]["first_name"]} #{user_data["data"]["user"]["last_name"]}
-
-    ul
-        li ID: #{user_data["data"]["user"]["ID"]}
-        li
-            if user_data["data"]["active"]
-                p Status: active
+    div.split_container
+        div
+            ul
+                li ID: #{user_data["data"]["user"]["ID"]}
+                li Postion: #{user_data["data"]["user"]["position"]}
+                li Address: #{user_data["data"]["user"]["address"]}
+            h2 Cards
+            if user_data["data"]["user"]["cards"]
+                ol
+                    each card in user_data["data"]["user"]["cards"]
+                        li UID: 
+                            a(href=url_for("card", card_id=card["UID"]))= card["UID"]
             else
-                p Status: passiv
-    
-    h2 Cards
-    if user_data["data"]["user"]["cards"]
-        ol
-            each card in user_data["data"]["user"]["cards"]
-                li UID: 
-                    a(href=url_for("card", card_id=card["UID"]))= card["UID"]
-    else
-        p User has no active Cards
+                p User has no active Cards
+        div
+            img(alt="avatar" src="https://api.dicebear.com/7.x/initials/svg?seed="+user_data["data"]["user"]["first_name"]+" "+user_data["data"]["user"]["last_name"])
+            if user_data["data"]["user"]["active"]
+                p.online Online
+            else
+                p.offline Offline
+
+block buttons
     a.big_btn.grant(href=url_for("grant_ownership")) Grant Ownership
     a.big_btn.new_form(href=url_for("update_user", user_id=user_data["data"]["user"]["ID"])) Update User
     a.big_btn.remove(href=url_for("delete_user", user_id=user_data["data"]["user"]["ID"])) Remove User

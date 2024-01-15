@@ -48,7 +48,8 @@ def create_user():
     try:
         if request.method == "POST":
             data = request.form
-            user_create(data["first_name"], data["last_name"])
+            user_create(data["first_name"], data["last_name"],
+                        data["address"], data["position"])
             return redirect(url_for('users'))
         elif request.method == "GET":
             return render_template('create_user.pug', title="Create User")
@@ -75,10 +76,18 @@ def update_user(user_id):
     try:
         if request.method == "POST":
             data = request.form
-            user_update(data["first_name"], data["last_name"], user_id)
+            user_update(data["first_name"], data["last_name"],
+                        data["address"], data["position"], user_id)
             return redirect(url_for('user', user_id=user_id))
         elif request.method == "GET":
-            return render_template('update_user.pug', title="Update User", first_name=user_detail(user_id)["data"]["user"]["first_name"], last_name=user_detail(user_id)["data"]["user"]["last_name"])
+            return render_template(
+                'update_user.pug',
+                title="Update User",
+                first_name=user_detail(user_id)["data"]["user"]["first_name"],
+                last_name=user_detail(user_id)["data"]["user"]["last_name"],
+                address=user_detail(user_id)["data"]["user"]["address"],
+                position=user_detail(user_id)["data"]["user"]["position"]
+            )
     except Exception as e:
         return render_template('error.pug', title="Error", code=400, msg=str(e))
 

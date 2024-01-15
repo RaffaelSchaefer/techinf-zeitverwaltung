@@ -43,7 +43,9 @@ def user_detail(user_id):
                     "ID": row[0][0],
                     "first_name": row[0][1],
                     "last_name": row[0][2],
-                    "active": True if row[0][3] == 1 else False,
+                    "address": row[0][3],
+                    "position": row[0][4],
+                    "active": True if row[0][5] == 1 else False,
                     "cards": []
                 }
             }
@@ -64,12 +66,12 @@ def user_detail(user_id):
         }, 400
 
 
-def user_create(first_name, last_name):
-    user_insert(first_name, last_name)
+def user_create(first_name, last_name, address, position):
+    user_insert(first_name, last_name, address, position)
 
 
-def user_update(first_name, last_name, user_id):
-    update_user(first_name, last_name, user_id)
+def user_update(first_name, last_name, address, position, user_id):
+    update_user(first_name, last_name, address, position, user_id)
 
 
 def user_delete(user_id):
