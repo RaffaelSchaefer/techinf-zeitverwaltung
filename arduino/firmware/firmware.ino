@@ -4,6 +4,9 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 
+#include <NTPClient.h>
+#include <WiFiUdp.h>
+
 #include ".env/credentials.h"
 #include ".env/api.h"
 
@@ -14,8 +17,12 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 int scan_delay = 20;
 
 // Define UTC offset
-int utcOffset = 1 // 1 = Winter, 2 = Summer
+int utcOffset = 1; // 1 = Winter, 2 = Summer
 int utcOffsetInSeconds = utcOffset * 60 * 60;
+int updateInterval = 1000;
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds, updateInterval);
 
 void setup()
 {
@@ -36,6 +43,13 @@ void setup()
 
   Serial.print("\nConnection established!\nIP address:\t");
   Serial.println(WiFi.localIP());
+
+  timeClient.begin();
+  timeClient.update();
+  if(timeClient.isTimeSet() == false)
+  {
+    timeClient.forceUpdate();
+  }
 }
 
 void loop()
@@ -47,33 +61,41 @@ void loop()
       return;
     if (!mfrc522.PICC_ReadCardSerial())
       return;
+
+    String epochTime = "";
     String uid = "";
+
     for (byte i = 0; i < mfrc522.uid.size; i++)
       uid.concat(String(mfrc522.uid.uidByte[i], HEX));
-    Serial.print("\nUID: " + uid);
+    Serial.println("\nUID: " + uid);
+
     if (WiFi.status() == WL_CONNECTED)
     {
       WiFiClient client;
       HTTPClient http;
-
       String serverPath = String(API_ADDRESS) + "/log";
+      
+      
+      epochTime = String(timeClient.getEpochTime()); 
+
+      Serial.println("TIME: " + epochTime + " (" + timeClient.getFormattedTime() + ")");
 
       http.begin(client, serverPath.c_str());
       http.addHeader("Content-Type", "application/json");
 
-      int httpResponseCode = http.POST("{\"key\": \"" + String(API_KEY) + "\",\"data\":{\"UID\": \"" + uid + "\"}}");
+      int httpResponseCode = http.POST("{\"key\": \"" + String(API_KEY) + "\",\"data\":{\"UID\": \"" + uid + "\",\"TIME\": \"" + epochTime +"\"}");
 
       if (httpResponseCode > 0)
       {
-        Serial.print("\nHTTP Response code: ");
+        Serial.print("HTTP Response code: ");
         Serial.println(httpResponseCode);
       }
       else
       {
-        Serial.print("\nError code: ");
+        Serial.print("Error code: ");
         Serial.println(httpResponseCode);
-        String payload = http.getString();
-        Serial.println(payload);
+        // String payload = http.getString();
+        // Serial.println(payload);
       }
       http.end();
     }
