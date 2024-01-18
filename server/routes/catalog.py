@@ -1,3 +1,7 @@
+import base64
+from io import BytesIO
+from matplotlib.figure import Figure
+
 from flask import Flask, request, jsonify, redirect, url_for, render_template
 
 from src.util import check_key
@@ -7,6 +11,17 @@ from controllers.user_controller import user_list, user_detail, user_create, use
 
 api = Flask(__name__, template_folder="../template", static_folder="../static")
 api.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
+
+
+@api.route("/test-figure/<x_1>/<x_2>")
+def test_figure(x_1, x_2):
+    fig = Figure()
+    ax = fig.subplots()
+    ax.plot([x_1, x_2])
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    data = base64.b64encode(buf.getbuffer()).decode("ascii")
+    return render_template("figure.pug", title="Figure test", figure=f'data:image/png;base64,{data}')
 
 
 @api.errorhandler(404)
