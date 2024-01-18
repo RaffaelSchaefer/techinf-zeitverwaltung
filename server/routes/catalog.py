@@ -1,3 +1,7 @@
+import base64
+from io import BytesIO
+from matplotlib.figure import Figure
+
 from flask import Flask, request, jsonify, redirect, url_for, render_template
 
 from src.util import check_key
@@ -7,6 +11,17 @@ from controllers.user_controller import user_list, user_detail, user_create, use
 
 api = Flask(__name__, template_folder="../template", static_folder="../static")
 api.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
+
+
+@api.route("/test-figure/<x_1>/<x_2>")
+def test_figure(x_1, x_2):
+    fig = Figure()
+    ax = fig.subplots()
+    ax.plot([x_1, x_2])
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    data = base64.b64encode(buf.getbuffer()).decode("ascii")
+    return render_template("figure.pug", title="Figure test", figure=f'data:image/png;base64,{data}')
 
 
 @api.errorhandler(404)
@@ -48,7 +63,8 @@ def create_user():
     try:
         if request.method == "POST":
             data = request.form
-            user_create(data["first_name"], data["last_name"])
+            user_create(data["first_name"], data["last_name"],
+                        data["address"], data["position"])
             return redirect(url_for('users'))
         elif request.method == "GET":
             return render_template('create_user.pug', title="Create User")
@@ -75,10 +91,18 @@ def update_user(user_id):
     try:
         if request.method == "POST":
             data = request.form
-            user_update(data["first_name"], data["last_name"], user_id)
+            user_update(data["first_name"], data["last_name"],
+                        data["address"], data["position"], user_id)
             return redirect(url_for('user', user_id=user_id))
         elif request.method == "GET":
-            return render_template('update_user.pug', title="Update User", first_name=user_detail(user_id)["data"]["user"]["first_name"], last_name=user_detail(user_id)["data"]["user"]["last_name"])
+            return render_template(
+                'update_user.pug',
+                title="Update User",
+                first_name=user_detail(user_id)["data"]["user"]["first_name"],
+                last_name=user_detail(user_id)["data"]["user"]["last_name"],
+                address=user_detail(user_id)["data"]["user"]["address"],
+                position=user_detail(user_id)["data"]["user"]["position"]
+            )
     except Exception as e:
         return render_template('error.pug', title="Error", code=400, msg=str(e))
 

@@ -13,6 +13,10 @@
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 int scan_delay = 20;
 
+// Define UTC offset
+int utcOffset = 1 // 1 = Winter, 2 = Summer
+int utcOffsetInSeconds = utcOffset * 60 * 60;
+
 void setup()
 {
   Serial.begin(115200);
