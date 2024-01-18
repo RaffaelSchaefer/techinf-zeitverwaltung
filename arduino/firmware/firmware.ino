@@ -19,9 +19,10 @@ int scan_delay = 20;
 // Define UTC offset
 int utcOffset = 1; // 1 = Winter, 2 = Summer
 int utcOffsetInSeconds = utcOffset * 60 * 60;
+int updateInterval = 1000;
 
 WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
+NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds, updateInterval);
 
 void setup()
 {
@@ -44,6 +45,11 @@ void setup()
   Serial.println(WiFi.localIP());
 
   timeClient.begin();
+  timeClient.update();
+  if(timeClient.isTimeSet() == false)
+  {
+    timeClient.forceUpdate();
+  }
 }
 
 void loop()
@@ -69,10 +75,10 @@ void loop()
       HTTPClient http;
       String serverPath = String(API_ADDRESS) + "/log";
       
-      timeClient.update();
+      
       epochTime = String(timeClient.getEpochTime()); 
 
-      Serial.println("TIME: " + epochTime);
+      Serial.println("TIME: " + epochTime + " (" + timeClient.getFormattedTime() + ")");
 
       http.begin(client, serverPath.c_str());
       http.addHeader("Content-Type", "application/json");
