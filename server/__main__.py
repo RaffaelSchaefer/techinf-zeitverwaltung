@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-from routes.catalog import api
-from src.args import args, reset, init, add_demo_data
+from routes import api
+from utils import args, reset, init, add_demo_data
 
 if not os.path.isfile("./db.sqlite"):
     db = open('db.sqlite', 'x')

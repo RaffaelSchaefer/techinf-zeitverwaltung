@@ -2,9 +2,7 @@ import argparse
 
 import click
 
-from models.card import card_create, card_delete, card_insert
-from models.card_ownership import card_ownership_create, card_ownership_delete, card_ownership_insert
-from models.user import user_create, user_delete, user_insert
+from model import *
 
 parser = argparse.ArgumentParser(
     prog='Zeitverwaltung Server',
@@ -28,25 +26,41 @@ args = parser.parse_args()
 
 
 def init():
-    card_create()
-    user_create()
-    card_ownership_create()
+    Position.create_schema()
+    User.create_schema()
+    Address.create_schema()
+    Status.create_schema()
+    Card.create_schema()
+    Log.create_schema()
     exit()
 
 
 def reset():
     if click.confirm('Do you want to continue?', default=True):
-        card_ownership_delete()
-        user_delete()
-        card_delete()
+        Log.drop_schema()
+        Card.drop_schema()
+        Status.drop_schema()
+        Address.drop_schema()
+        User.drop_schema()
+        Position.drop_schema()
         exit()
 
 
 def add_demo_data():
-    card_insert("83451ba")
-    card_insert("37f8b97")
-    user_insert("John", "Doe", "Musterstr. 1a Idstein 66423", "HR Administration")
-    user_insert("Jane", "Doe", "Musterstr. 1b Idstein 66423", "R&D Scientist")
-    card_ownership_insert(1, "83451ba")
-    card_ownership_insert(2, "37f8b97")
+    Position.add_entry(Position("Fullstack Developer"))
+    Position.add_entry(Position("Hardware Developer"))
+    User.add_entry(User("Raffael", "Schäfer", 1))
+    User.add_entry(User("Florian", "Wittmann", 2))
+    Address.add_entry(Address(
+        "Campusallee",
+        "9906C",
+        "Hoppstädten-Weiersbach",
+        "55768",
+        "Germany",
+        1
+    ))
+    Status.add_entry(Status(1))
+    Status.add_entry(Status(2))
+    Card.add_entry(Card("83451ba", 1))
+    Card.add_entry(Card("37f8b97", 2))
     exit()

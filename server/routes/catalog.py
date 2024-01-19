@@ -4,10 +4,10 @@ from matplotlib.figure import Figure
 
 from flask import Flask, request, jsonify, redirect, url_for, render_template
 
-from src.util import check_key
-from controllers.card_controller import card_list, card_detail, card_create, card_delete, toggle_card, available_cards, card_update
-from controllers.ownership_controller import grant_card_ownership, card_ownership_remove
-from controllers.user_controller import user_list, user_detail, user_create, user_delete, user_update
+from routes._utils import check_key
+from controller.card import card_list, card_detail, card_create, card_delete, toggle_card, available_cards, card_update
+from controller.ownership_controller import grant_card_ownership, card_ownership_remove
+from controller.user import user_list, user_detail, user_create, user_delete, user_update
 
 api = Flask(__name__, template_folder="../template", static_folder="../static")
 api.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
