@@ -49,6 +49,7 @@ def reset():
 def add_demo_data():
     Position.add_entry(Position("Fullstack Developer"))
     Position.add_entry(Position("Hardware Developer"))
+    Position.add_entry(Position("DevOps"))
     User.add_entry(User("Raffael", "Schäfer", 1))
     User.add_entry(User("Florian", "Wittmann", 2))
     Address.add_entry(Address(

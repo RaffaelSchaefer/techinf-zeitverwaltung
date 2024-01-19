@@ -16,13 +16,13 @@ class User:
     @staticmethod
     def create_schema() -> None:
         SQLiteModel.post("""
-        CREATE TABLE IF NOT EXISTS user (
-            ID         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            first_name TEXT    NOT NULL, 
-            last_name  TEXT    NOT NULL,
-            postionID  INTEGER NOT NULL,
-            FOREIGN KEY (postionID)  REFERENCES position(ID)
-        );
+            CREATE TABLE IF NOT EXISTS user (
+                first_name TEXT    NOT NULL, 
+                last_name  TEXT    NOT NULL,
+                postionID  INTEGER NOT NULL,
+                ID         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                FOREIGN KEY (postionID) REFERENCES position(ID)
+            );
         """)
 
     @staticmethod
@@ -30,8 +30,8 @@ class User:
         SQLiteModel.post("DROP TABLE user")
 
     @staticmethod
-    def add_entry(user: "User") -> None:
-        SQLiteModel.post("""
+    def add_entry(user: "User") -> int:
+        return SQLiteModel.create("""
             INSERT INTO user (first_name, last_name, postionID) 
             VALUES (:first_name, :last_name, :postionID)
         """, {
@@ -46,7 +46,7 @@ class User:
         SQLiteModel.post("""
             DELETE FROM user
             WHERE ID = :ID;
-        """, {"ID": user.ID})
+        """, {"ID": user.id})
 
     @staticmethod
     def update_entry(old_user: "User", new_user: "User") -> None:
@@ -54,7 +54,7 @@ class User:
             UPDATE user
             SET first_name = :first_name, last_name = :last_name, postionID = :postionID
             WHERE ID = :ID;
-            """, {"first_name": new_user.ID, "last_name": new_user.last_name, "postionID": new_user.postionID, "ID": old_user.id})
+            """, {"first_name": new_user.first_name, "last_name": new_user.last_name, "postionID": new_user.postionID, "ID": old_user.id})
 
     @staticmethod
     def get_entry(ID: int) -> "User":

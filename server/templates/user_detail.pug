@@ -6,8 +6,7 @@ block content
         div
             ul
                 li ID: #{user_data["data"]["user"]["ID"]}
-                li Postion: #{user_data["data"]["user"]["position"]}
-                li Address: #{user_data["data"]["user"]["address"]}
+                li Postion: #{user_data["data"]["user"]["position"]["name"]}
             h2 Cards
             if user_data["data"]["user"]["cards"]
                 ol
@@ -16,6 +15,13 @@ block content
                             a(href=url_for("card", card_id=card["UID"]))= card["UID"]
             else
                 p User has no active Cards
+            h2 Addresses
+            if user_data["data"]["user"]["addresses"]
+                ol
+                    each address in user_data["data"]["user"]["addresses"]
+                        li= address["full_address"]
+            else
+                p User has no know Address
         div
             img(alt="avatar" src="https://api.dicebear.com/7.x/initials/svg?seed="+user_data["data"]["user"]["first_name"]+" "+user_data["data"]["user"]["last_name"])
             if user_data["data"]["user"]["active"]

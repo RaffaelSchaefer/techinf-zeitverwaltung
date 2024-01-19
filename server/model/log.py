@@ -21,10 +21,9 @@ class Log:
             cardUID      TEXT    NOT NULL,
             status       INTEGER NOT NULL,
             userID       INTEGER NOT NULL,
-            FOREIGN KEY (cardUID)  REFERENCES card(UID) ON UPDATE CASCADE,
-            FOREIGN KEY (status)   REFERENCES status(status),
-            FOREIGN KEY (userID)   REFERENCES user(ID) ON DELETE CASCADE,
-            PRIMARY KEY (time, cardUID, status, userID)
+            FOREIGN KEY (cardUID) REFERENCES card(UID),
+            FOREIGN KEY (userID)  REFERENCES user(ID) ON DELETE CASCADE,
+            PRIMARY KEY (time, cardUID, userID)
         );
         """)
 
@@ -45,8 +44,8 @@ class Log:
     def delete_entry(log: "Log") -> None:
         SQLiteModel.post("""
             DELETE FROM log
-            WHERE userID = :userID AND time = :time AND status = :status AND cardUID = :cardUID;
-        """, {"userID": log.userID, "time": log.time, "status": log.status, "cardUID": log.cardUID})
+            WHERE userID = :userID AND time = :time  AND cardUID = :cardUID;
+        """, {"userID": log.userID, "time": log.time, "cardUID": log.cardUID})
 
     def update_entry(old_log: "Log", new_log: "Log") -> None:
         SQLiteModel.post("""
@@ -63,12 +62,6 @@ class Log:
             "new_status": new_log.status,
             "new_cardUID": new_log.cardUID
         })
-
-    @staticmethod
-    def get_entries(userID: int) -> list["Log"]:
-        rows = SQLiteModel.get(
-            "SELECT * FROM log WHERE userID = :userID", {"userID": userID})
-        return [Log(*row[:4]) for row in rows]
 
     # FIXME Edge Cases
     @staticmethod

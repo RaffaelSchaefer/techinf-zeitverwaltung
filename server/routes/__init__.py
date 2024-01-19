@@ -1,1 +1,1 @@
-from routes.catalog import api
+from routes.__main__ import api

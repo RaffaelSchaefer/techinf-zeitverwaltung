@@ -1,6 +1,7 @@
 from controller._utils import error_handling
 from model import User, Position, Status, Card, Address
 
+
 @error_handling
 def user_list() -> dict:
     return {
@@ -15,6 +16,7 @@ def user_list() -> dict:
             ]
         }
     }
+
 
 @error_handling
 def user_detail(userID: int) -> dict:
@@ -36,28 +38,22 @@ def user_detail(userID: int) -> dict:
                 },
                 "active": status.status == 1 if status else False,
                 "cards": [{"UID": card.UID, "userID": user.id} for card in cards],
-                "addresses": [
-                    {
-                        "street_name": address.street_name,
-                        "house_number": address.house_number,
-                        "town_name": address.town_name,
-                        "postal_code": address.postal_code,
-                        "country": address.country
-                    }
-                    for address in addresses
-                ]
+                "addresses": [{"full_address": f"{address.street_name} {address.house_number} {address.town_name} {address.postal_code} {address.country}"}for address in addresses]
             }
         }
     }
 
+
 @error_handling
-def user_create(first_name: str, last_name: str, position: int) -> None:
-    User.add_entry(User(first_name, last_name, position))
+def user_create(first_name: str, last_name: str, position: int) -> int:
+    return User.add_entry(User(first_name, last_name, position))
+
 
 @error_handling
 def user_update(userID: int, first_name: str, last_name: str, position: int) -> None:
     User.update_entry(User.get_entry(userID), User(
         first_name, last_name, position))
+
 
 @error_handling
 def user_delete(userID: int) -> None:

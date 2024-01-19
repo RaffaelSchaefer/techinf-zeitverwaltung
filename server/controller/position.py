@@ -8,7 +8,8 @@ def position_list() -> dict:
         "data": {
             "positions": [
                 {
-                    "name": position.name
+                    "name": position.name,
+                    "ID": position.id
                 }
                 for position in positions
             ]

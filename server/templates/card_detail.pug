@@ -4,14 +4,14 @@ block content
     h1 Card Details
 
     p UID: #{card_data["data"]["card"]["UID"]}
-    if card_data["data"]["card"]["OWNER_ID"]
+    if card_data["data"]["card"]["userID"]
         p(style="margin-bottom: 20px;") Owned by: 
-            a(href=url_for("user", user_id=card_data["data"]["card"]["OWNER_ID"])) #{owner_detail["data"]["user"]["first_name"]} #{owner_detail["data"]["user"]["last_name"]}
+            a(href=url_for("user", user_id=card_data["data"]["card"]["userID"])) #{owner_detail["data"]["user"]["first_name"]} #{owner_detail["data"]["user"]["last_name"]}
 
 block buttons
     a.big_btn.new_form(href= url_for("update_card", card_id=card_data["data"]["card"]["UID"])) Update Card
     a.big_btn.remove(href= url_for("delete_card", card_id=card_data["data"]["card"]["UID"])) Remove Card
-    if card_data["data"]["card"]["OWNER_ID"]
+    if card_data["data"]["card"]["userID"]
         a.big_btn.remove(href=url_for("remove_ownership", card_id=card_data["data"]["card"]["UID"]) style="margin-top: 20px;") Remove Ownership
     else
         a.big_btn.grant(href= url_for("grant_ownership"), style="margin-top: 20px;") Grant Ownership

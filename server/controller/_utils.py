@@ -1,7 +1,7 @@
-def error_handling(func: function):
-    def wrapper():
+def error_handling(func):
+    def wrapper(*args, **kwargs):
         try:
-            func()
+            return func(*args, **kwargs)
         except Exception as e:
             return {
                 "error": str(e)

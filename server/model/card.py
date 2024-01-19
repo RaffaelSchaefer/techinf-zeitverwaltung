@@ -15,7 +15,7 @@ class Card:
         CREATE TABLE IF NOT EXISTS card (
             UID        TEXT    NOT NULL PRIMARY KEY,
             userID     INTEGER,
-            FOREIGN KEY (userID) REFERENCES user(ID)
+            FOREIGN KEY (userID) REFERENCES user(ID) ON DELETE SET NULL
         );
         """)
 

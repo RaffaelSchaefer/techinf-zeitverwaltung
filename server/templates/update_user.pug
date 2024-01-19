@@ -1,0 +1,35 @@
+extends include/layout.pug
+
+block content
+    h1 Update User 
+
+    form(method='POST')
+        label(for="first_name") First Name
+        input#first_name(type="text", placeholder="Enter first name" name="first_name" value=user["first_name"] required)
+        br
+        label(for="last_name") Last Name
+        input#last_name(type="text", placeholder="Enter last name" name="last_name" value=user["last_name"] required)
+        br
+        label(for="street_name") Street Name
+        input#street_name(type="text", placeholder="Enter Street Name" name="street_name" value=address["street_name"] required)
+        br
+        label(for="house_number") House Number
+        input#house_number(type="text", placeholder="Enter House Number" name="house_number" value=address["house_number"] required)
+        br
+        label(for="town_name") Town Name
+        input#town_name(type="text", placeholder="Enter Town Name" name="town_name" value=address["town_name"] required)
+        br
+        label(for="postal_code") Postal Code
+        input#postal_code(type="text", placeholder="Enter Postal Code" name="postal_code" value=address["postal_code"] required)
+        br
+        label(for="country") Country
+        input#country(type="text", placeholder="Enter Country" name="country" value=address["country"] required)
+        br
+        label(for="position") Position
+        select#position(name="position")
+                each position in positions
+                    if user["position"]["id"] == position["ID"]
+                        option(value= position["ID"] selected)= position["name"]
+                    else
+                        option(value= position["ID"])= position["name"]
+        button(type="submit") Update User

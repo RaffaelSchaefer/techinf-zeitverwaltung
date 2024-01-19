@@ -14,8 +14,8 @@ class Position:
     def create_schema() -> None:
         SQLiteModel.post("""
         CREATE TABLE IF NOT EXISTS position (
-            ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            name TEXT    NOT NULL UNIQUE
+            name TEXT    NOT NULL UNIQUE,
+            ID   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
         );
         """)
 
