@@ -1,15 +1,15 @@
 extends include/layout.pug
 
 block content
-    h1= title
+    h1.display-3.text-center= title
 
-    if user_data["data"]["users"]
-        ul(style="margin-bottom: 20px;")
-            each user in user_data["data"]["users"]
-                li
-                    a(href=url_for("user", user_id=user["ID"])) #{user["first_name"]} #{user["last_name"]}
-    else
-        p There are no Users
+    div.container
+        if user_data["data"]["users"]
+            div.list-group.small-box.mx-auto
+                each user in user_data["data"]["users"]
+                    a.list-group-item.list-group-item-action.fw-bold(href=url_for("user", user_id=user["ID"])) #{user["first_name"]} #{user["last_name"]}
+        else
+            div.alert.alert-info.mx-auto(role="alert") There are no Users inside the database
 
 block buttons
-    a.big_btn.new_form(href=url_for("create_user")) Create new user
+    a.btn.btn-primary.btn-lg.px-4.gap-3.mb-2(href=url_for("create_user")) Create new user

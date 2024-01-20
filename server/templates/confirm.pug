@@ -1,12 +1,12 @@
 extends include/layout.pug
 
 block content
-    h1= title
+    div.container.pt-3
+        h1.display-6= title
 
-    p
-        strong Do you want to take this action?
+        p.lead Do you want to take this action?
 
 block buttons
     form(method="POST") 
-        button.grant(type="submit", name="confirmation", value="0") No
-        button.remove(type="submit", name="confirmation", value="1") Yes
+        button.btn.btn-success.btn-lg.px-4.gap-3.me-2.mb-2(type="submit", name="confirmation", value="0") No
+        button.btn.btn-danger.btn-lg.px-4.gap-3.me-2.mb-2(type="submit", name="confirmation", value="1") Yes

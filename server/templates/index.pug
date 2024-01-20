@@ -1,9 +1,11 @@
 extends include/layout.pug
 
 block content
-    h1 Home
+    div.text-center.pt-5.px-3
+        h1.display-5.fw-bold.text-body-emphasis Main Menu
 
-    h2 Stats
-
-    p Users: #{users}
-    p Cards: #{cards}
+        div.col-lg-6.mx-auto
+            p.lead.mb-4 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse deleniti aspernatur optio fugiat culpa sapiente, quia veniam, qui, id accusamus quidem? Laboriosam, voluptates. Minus mollitia officiis, quia quasi debitis culpa?
+            div.d-grid.gap-2.d-sm-flex.justify-content-sm-center
+                a.btn.btn-primary.btn-lg.px-4.gap-3(href =url_for("users")) View all Users
+                a.btn.btn-outline-secondary.btn-lg.px-4(href =url_for("cards")) View all Cards

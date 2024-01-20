@@ -12,7 +12,7 @@ api.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
 
 
 @api.errorhandler(404)
-def not_found():
+def not_found(e):
     return render_template("404.pug", title="Page not found")
 
 

@@ -1,32 +1,36 @@
 extends include/layout.pug
 
 block content
-    h1 Create a new User 
+    div.container.pt-3
+        h1.display-5 Create a new User 
 
-    form(method='POST')
-        label(for="first_name") First Name
-        input#first_name(type="text", placeholder="Enter first name" name="first_name" required)
-        br
-        label(for="last_name") Last Name
-        input#last_name(type="text", placeholder="Enter last name" name="last_name" required)
-        br
-        label(for="street_name") Street Name
-        input#street_name(type="text", placeholder="Enter Street Name" name="street_name" required)
-        br
-        label(for="house_number") House Number
-        input#house_number(type="text", placeholder="Enter House Number" name="house_number" required)
-        br
-        label(for="town_name") Town Name
-        input#town_name(type="text", placeholder="Enter Town Name" name="town_name" required)
-        br
-        label(for="postal_code") Postal Code
-        input#postal_code(type="text", placeholder="Enter Postal Code" name="postal_code" required)
-        br
-        label(for="country") Country
-        input#country(type="text", placeholder="Enter Country" name="country" required)
-        br
-        label(for="position") Position
-        select#position(name="position")
-                each position in positions
-                    option(value= position["ID"])= position["name"]
-        button(type="submit") Create User
+        form(method='POST')
+            label.form-label(for="first_name") First Name
+            input.form-control#first_name(type="text", placeholder="Enter first name" name="first_name" required)
+            br
+            label.form-label(for="last_name") Last Name
+            input.form-control#last_name(type="text", placeholder="Enter last name" name="last_name" required)
+            br
+            label.form-label(for="street_name") Street Name
+            input.form-control#street_name(type="text", placeholder="Enter Street Name" name="street_name" required)
+            br
+            label.form-label(for="house_number") House Number
+            input.form-control#house_number(type="text", placeholder="Enter House Number" name="house_number" required)
+            br
+            label.form-label(for="town_name") Town Name
+            input.form-control#town_name(type="text", placeholder="Enter Town Name" name="town_name" required)
+            br
+            label.form-label(for="postal_code") Postal Code
+            input.form-control#postal_code(type="text", placeholder="Enter Postal Code" name="postal_code" required)
+            br
+            label.form-label(for="country") Country
+            input.form-control#country(type="text", placeholder="Enter Country" name="country" required)
+            br
+            label.form-label(for="position") Position
+            select.form-select#position(name="position" aria-describedby="positionHelp" required)
+                    each position in positions
+                        option(value= position["ID"])= position["name"]
+            div.form-text#positionHelp If the position is missing, please add it 
+                a.fw-bold.text-decoration-none(href="/create-position") here
+            br
+            button.btn.btn-primary.btn-lg.px-4.gap-3.me-2.mb-2(type="submit") Create User

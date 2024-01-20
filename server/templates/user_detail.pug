@@ -1,35 +1,35 @@
 extends include/layout.pug
 
 block content
-    h1 #{user_data["data"]["user"]["first_name"]} #{user_data["data"]["user"]["last_name"]}
-    div.split_container
-        div
-            ul
-                li ID: #{user_data["data"]["user"]["ID"]}
-                li Postion: #{user_data["data"]["user"]["position"]["name"]}
-            h2 Cards
-            if user_data["data"]["user"]["cards"]
-                ol
-                    each card in user_data["data"]["user"]["cards"]
-                        li UID: 
-                            a(href=url_for("card", card_id=card["UID"]))= card["UID"]
-            else
-                p User has no active Cards
-            h2 Addresses
-            if user_data["data"]["user"]["addresses"]
-                ol
-                    each address in user_data["data"]["user"]["addresses"]
-                        li= address["full_address"]
-            else
-                p User has no know Address
-        div
-            img(alt="avatar" src="https://api.dicebear.com/7.x/initials/svg?seed="+user_data["data"]["user"]["first_name"]+" "+user_data["data"]["user"]["last_name"])
+    div.container.pt-3
+        h1.display-6 #{user_data["data"]["user"]["first_name"]} #{user_data["data"]["user"]["last_name"]} 
             if user_data["data"]["user"]["active"]
-                p.online Online
-            else
-                p.offline Offline
+                    span.badge.text-bg-success Online
+                else
+                    span.badge.text-bg-danger Offline
+        div.row
+            div.col
+                ul.list-group
+                    li.list-group-item ID: #{user_data["data"]["user"]["ID"]}
+                    li.list-group-item Postion: #{user_data["data"]["user"]["position"]["name"]}
+                h2.h5.my-2 Cards
+                if user_data["data"]["user"]["cards"]
+                    div.list-group
+                        each card in user_data["data"]["user"]["cards"]
+                            a.list-group-item.list-group-item-action.fw-bold(href=url_for("card", card_id=card["UID"])) UID: #{card["UID"]}
+                else
+                    p User has no active Cards
+                h2.h5.my-2 Addresses
+                if user_data["data"]["user"]["addresses"]
+                    ul.list-group
+                        each address in user_data["data"]["user"]["addresses"]
+                            li.list-group-item= address["full_address"]
+                else
+                    p User has no know Address
+            div.col.mx-auto.d-none.d-lg-block
+                img.rounded(alt="avatar" style="height: 200px;" src="https://api.dicebear.com/7.x/initials/svg?seed="+user_data["data"]["user"]["first_name"]+" "+user_data["data"]["user"]["last_name"])
 
 block buttons
-    a.big_btn.grant(href=url_for("grant_ownership")) Grant Ownership
-    a.big_btn.new_form(href=url_for("update_user", user_id=user_data["data"]["user"]["ID"])) Update User
-    a.big_btn.remove(href=url_for("delete_user", user_id=user_data["data"]["user"]["ID"])) Remove User
+    a.btn.btn-success.btn-lg.px-4.gap-3.me-2.mb-2(href=url_for("grant_ownership")) Grant Ownership
+    a.btn.btn-primary.btn-lg.px-4.gap-3.me-2.mb-2(href=url_for("update_user", user_id=user_data["data"]["user"]["ID"])) Update User
+    a.btn.btn-danger.btn-lg.px-4.gap-3.me-2.mb-2(href=url_for("delete_user", user_id=user_data["data"]["user"]["ID"])) Remove User
