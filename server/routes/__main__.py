@@ -13,7 +13,7 @@ api.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
 
 @api.errorhandler(404)
 def not_found(e):
-    return render_template("404.pug", title="Page not found")
+    return render_template("utils/404.pug", title="Page not found")
 
 
 @api.route("/")
@@ -33,13 +33,13 @@ def site():
 @api.route("/users")
 @page_error_handling
 def users():
-    return render_template('users.pug', title="All Users", user_data=user_list())
+    return render_template('user/user_list.pug', title="All Users", user_data=user_list())
 
 
 @api.route("/user/<user_id>")
 @page_error_handling
 def user(user_id):
-    return render_template('user_detail.pug', title="User Details", user_data=user_detail(user_id))
+    return render_template('user/user_detail.pug', title="User Details", user_data=user_detail(user_id))
 
 
 @api.route("/create-user", methods=['GET', 'POST'])
@@ -53,7 +53,7 @@ def create_user():
         status_create(creates_user_id)
         return redirect(url_for('users'))
     elif request.method == "GET":
-        return render_template('create_user.pug', title="Create User", positions=position_list()["data"]["positions"])
+        return render_template('user/user_create.pug', title="Create User", positions=position_list()["data"]["positions"])
 
 
 @api.route("/delete-user/<user_id>", methods=["Get", "Post"])
@@ -65,7 +65,7 @@ def delete_user(user_id):
             user_delete(user_id)
         return redirect(url_for('users'))
     elif request.method == "GET":
-        return render_template('confirm.pug', title="Delete User")
+        return render_template('utils/confirm.pug', title="Delete User")
 
 
 @api.route("/update-user/<user_id>", methods=["Get", "Post"])
@@ -93,7 +93,7 @@ def update_user(user_id):
         return redirect(url_for('user', user_id=user_id))
     elif request.method == "GET":
         return render_template(
-            'update_user.pug',
+            'user/user_update.pug',
             title="Update User",
             user=user_detail(user_id)["data"]["user"],
             address=address,
@@ -106,13 +106,13 @@ def update_user(user_id):
 @api.route("/cards")
 @page_error_handling
 def cards():
-    return render_template('cards.pug', title="All Cards", card_data=card_list())
+    return render_template('card/card_list.pug', title="All Cards", card_data=card_list())
 
 
 @api.route("/card/<card_id>")
 @page_error_handling
 def card(card_id):
-    return render_template('card_detail.pug', title="Card Details", card_data=card_detail(card_id), owner_detail=user_detail(card_detail(card_id)["data"]["card"]["userID"]))
+    return render_template('card/card_detail.pug', title="Card Details", card_data=card_detail(card_id), owner_detail=user_detail(card_detail(card_id)["data"]["card"]["userID"]))
 
 
 @api.route("/create-card", methods=["Get", "POST"])
@@ -123,7 +123,7 @@ def create_card():
         card_create(data["UID"])
         return redirect(url_for('cards'))
     elif request.method == "GET":
-        return render_template('create_card.pug', title="Register new Card")
+        return render_template('card/card_create.pug', title="Register new Card")
 
 
 @api.route("/delete-card/<card_id>", methods=["Get", "Post"])
@@ -135,7 +135,7 @@ def delete_card(card_id):
             card_delete(card_id)
         return redirect(url_for('cards'))
     elif request.method == "GET":
-        return render_template('confirm.pug', title="Delete Card")
+        return render_template('utils/confirm.pug', title="Delete Card")
 
 
 @api.route("/update-card/<card_id>", methods=["Get", "Post"])
@@ -146,7 +146,7 @@ def update_card(card_id):
         card_update(card_id, data["new_id"], None)
         return redirect(url_for('card', card_id=data["new_id"]))
     elif request.method == "GET":
-        return render_template('update_card.pug', title="Update Card", card_id=card_id)
+        return render_template('card/card_update.pug', title="Update Card", card_id=card_id)
 
 # Ownership
 
@@ -159,7 +159,7 @@ def grant_ownership():
         card_update(data["card_UID"], data["card_UID"], data["user_ID"])
         return redirect(url_for('user', user_id=data["user_ID"]))
     elif request.method == "GET":
-        return render_template('grant_ownership.pug', title="Grant Ownership", user_data=user_list(), card_data=card_list(True))
+        return render_template('card/grant_ownership.pug', title="Grant Ownership", user_data=user_list(), card_data=card_list(True))
 
 
 @api.route("/remove-ownership/<card_id>", methods=["GET", "POST"])
@@ -171,7 +171,7 @@ def remove_ownership(card_id):
             card_update(card_id, card_id, None)
         return redirect(url_for('card', card_id=card_id))
     elif request.method == "GET":
-        return render_template('confirm.pug', title="Remove Ownership")
+        return render_template('utils/confirm.pug', title="Remove Ownership")
 
 # IOT Paths
 
@@ -183,10 +183,8 @@ def log():
             data = request.get_json()
             if check_key(data["key"]) is False:
                 return {"error": "Incorrect API Key"}, 401
-            status_update(
-                card_detail(data["data"]["UID"])["data"]["userID"], 
-                1 if status_detail(card_detail(data["data"]["UID"])["data"]["userID"]) == 0 else 0
-            )
+            userID = card_detail(data["data"]["UID"])["data"]["card"]["userID"]
+            status_update(userID)
             return jsonify(data), 201
         except Exception as e:
             return {
