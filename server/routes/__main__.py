@@ -49,7 +49,8 @@ def create_user():
         data = request.form
         creates_user_id = user_create(
             data["first_name"], data["last_name"], int(data["position"]))
-        address_create(data["street_name"], data["house_number"], data["town_name"], data["postal_code"], data["country"], creates_user_id)
+        address_create(data["street_name"], data["house_number"], data["town_name"],
+                       data["postal_code"], data["country"], creates_user_id)
         status_create(creates_user_id)
         return redirect(url_for('users'))
     elif request.method == "GET":
@@ -172,6 +173,56 @@ def remove_ownership(card_id):
         return redirect(url_for('card', card_id=card_id))
     elif request.method == "GET":
         return render_template('utils/confirm.pug', title="Remove Ownership")
+
+# Postion pages
+
+
+@api.route("/postions")
+@page_error_handling
+def postions():
+    return render_template('position/position_list.pug', title="All Postions", postion_data=position_list())
+
+
+@api.route("/postion/<id>")
+@page_error_handling
+def postion(id):
+    return render_template('position/position_detail.pug', title="All Postions", postion_data=position_detail(id))
+
+
+@api.route("/create-postion", methods=["Get", "POST"])
+@page_error_handling
+def create_postion():
+    if request.method == "POST":
+        data = request.form
+        position_create(data["name"])
+        return redirect(url_for('postions'))
+    elif request.method == "GET":
+        return render_template('position/position_create.pug', title="Create new Postion")
+
+
+@api.route("/update-postion/<id>", methods=["Get", "POST"])
+@page_error_handling
+def update_postion(id):
+    if request.method == "POST":
+        data = request.form
+        position_update(id, data["name"])
+        return redirect(url_for('postion', id=id))
+    elif request.method == "GET":
+        return render_template('position/position_update.pug', title="Update Postion", postion_data=position_detail(id))
+
+
+@api.route("/delete-postion/<id>", methods=["Get", "POST"])
+@page_error_handling
+def delete_postion(id):
+    if request.method == "POST":
+        position_delete(id)
+        return redirect(url_for('postions'))
+    elif request.method == "GET":
+        position_user = [] 
+        for user in user_list()["data"]["users"]: 
+            if user["position_id"] == int(id):
+                position_user.append(user)
+        return render_template('position/position_delete.pug', title="Delete Postion", len=len(position_user), user_data=position_user)
 
 # IOT Paths
 

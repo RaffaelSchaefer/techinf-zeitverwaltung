@@ -40,9 +40,9 @@ class Position:
     def update_entry(old_position: "Position", new_position: "Position") -> None:
         SQLiteModel.post("""
             UPDATE position
-            SET ID = :new_ID, name = :new_name
+            SET name = :new_name
             WHERE ID = :ID;
-            """, {"ID": old_position.ID, "new_ID": new_position.ID, "new_name": new_position.name})
+            """, {"ID": old_position.id, "new_name": new_position.name})
 
     @staticmethod
     def get_entry(id: int) -> "Position":

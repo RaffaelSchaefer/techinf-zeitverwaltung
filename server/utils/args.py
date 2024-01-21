@@ -60,6 +60,14 @@ def add_demo_data():
         "Germany",
         1
     ))
+    Address.add_entry(Address(
+        "Campusallee",
+        "99011C",
+        "Hoppstädten-Weiersbach",
+        "55768",
+        "Germany",
+        2
+    ))
     Status.add_entry(Status(1))
     Status.add_entry(Status(2))
     Card.add_entry(Card("83451ba", 1))

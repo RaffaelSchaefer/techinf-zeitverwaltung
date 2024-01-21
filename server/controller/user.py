@@ -11,6 +11,7 @@ def user_list() -> dict:
                     "ID": user.id,
                     "first_name": user.first_name,
                     "last_name": user.last_name,
+                    "position_id": user.postionID
                 }
                 for user in User.get_entries()
             ]

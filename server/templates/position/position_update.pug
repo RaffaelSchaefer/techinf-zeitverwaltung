@@ -1,0 +1,11 @@
+extends include/layout.pug
+
+block content
+    div.container.mt-3
+        h1.display-5 Create new Position
+
+        form(method='POST')
+            label.form-label(for="name") 
+            input.form-control#name(type="text", placeholder="Enter Position Name" name="name" aria-describedby="UIDHelp" value=postion_data["data"]["position"]["name"] required)
+            br
+            button.btn.btn-primary.btn-lg.px-4.gap-3.me-2.mb-2(type="submit") Update Position

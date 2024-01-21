@@ -1,7 +1,7 @@
 extends include/layout.pug
 
 block content
-    div.container.pt-3
+    div.container.mt-3
         h1.display-6 #{user_data["data"]["user"]["first_name"]} #{user_data["data"]["user"]["last_name"]} 
             if user_data["data"]["user"]["active"]
                     span.badge.text-bg-success Online

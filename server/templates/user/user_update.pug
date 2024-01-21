@@ -1,7 +1,7 @@
 extends include/layout.pug
 
 block content
-    div.container.pt-3
+    div.container.mt-3
         h1.display-5 Update User 
 
         form(method='POST')
@@ -34,6 +34,6 @@ block content
                         else
                             option(value= position["ID"])= position["name"]
             div.form-text#positionHelp If the position is missing, please add it 
-                a.fw-bold.text-decoration-none(href="/create-position") here
+                a.fw-bold.text-decoration-none(href=url_for("create_postion")) here
             br
             button.btn.btn-primary.btn-lg.px-4.gap-3.me-2.mb-2(type="submit") Update User
