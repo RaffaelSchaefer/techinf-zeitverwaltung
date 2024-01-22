@@ -83,7 +83,7 @@ void loop()
       http.begin(client, serverPath.c_str());
       http.addHeader("Content-Type", "application/json");
 
-      int httpResponseCode = http.POST("{\"key\": \"" + String(API_KEY) + "\",\"data\":{\"UID\": \"" + uid + "\",\"TIME\": \"" + epochTime +"\"}");
+      int httpResponseCode = http.POST("{\"key\": \"" + String(API_KEY) + "\",\"data\":{\"UID\": \"" + uid + "\",\"TIME\": \"" + epochTime +"\"}}");
 
       if (httpResponseCode > 0)
       {
