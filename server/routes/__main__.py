@@ -23,16 +23,25 @@ def index():
 @api.route("/site")
 @page_error_handling
 def site():
-    return render_template('index.pug', title="Home")
+    return render_template('index.pug', title="Home", log_data=log_list())
 
 
 # User pages
 
 
-@api.route("/users")
+@api.route("/users", methods=['GET', 'POST'])
 @page_error_handling
 def users():
-    return render_template('user/user_list.pug', title="All Users", user_data=user_list())
+    if request.method == "POST":
+        data = request.form
+        result = []
+        for user in user_list()["data"]["users"]:
+            name = f'{user["first_name"]} {user["last_name"]}'
+            if data["search"] in name:
+                result.append(user)
+        return render_template('user/user_search.pug', title="Search Result", user_data=result)
+    elif request.method == "GET":
+        return render_template('user/user_list.pug', title="All Users", user_data=user_list())
 
 
 @api.route("/user/<user_id>")
@@ -102,10 +111,18 @@ def update_user(user_id):
 # Card pages
 
 
-@api.route("/cards")
+@api.route("/cards", methods=['GET', 'POST'])
 @page_error_handling
 def cards():
-    return render_template('card/card_list.pug', title="All Cards", card_data=card_list())
+    if request.method == "POST":
+        data = request.form
+        result = []
+        for card in card_list()["data"]["cards"]:
+            if data["search"] in card["UID"]:
+                result.append(card)
+        return render_template('card/card_search.pug', title="Search Result", card_data=result)
+    elif request.method == "GET":
+        return render_template('card/card_list.pug', title="All Cards", card_data=card_list())
 
 
 @api.route("/card/<card_id>")
@@ -175,10 +192,18 @@ def remove_ownership(card_id):
 # Postion pages
 
 
-@api.route("/postions")
+@api.route("/postions", methods=['GET', 'POST'])
 @page_error_handling
 def postions():
-    return render_template('position/position_list.pug', title="All Postions", postion_data=position_list())
+    if request.method == "POST":
+        data = request.form
+        result = []
+        for postion in position_list()["data"]["positions"]:
+            if data["search"] in postion["name"]:
+                result.append(postion)
+        return render_template('position/position_search.pug', title="Search Result", postion_data=result)
+    elif request.method == "GET":
+        return render_template('position/position_list.pug', title="All Postions", postion_data=position_list())
 
 
 @api.route("/postion/<id>")

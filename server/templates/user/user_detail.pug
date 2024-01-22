@@ -28,8 +28,8 @@ block content
                     p User has no know Address
                 h2.h5.my-2 Aktivität
                 if log_data["data"]["logs"]
-                    ul.list-group
-                        each log in log_data["data"]["logs"]
+                    ul.list-group(x-cloak)
+                        each log in log_data["data"]["logs"][::-1]
                             li.list-group-item.-group.d-flex.justify-content-between.align-items-center
                                 span.my-1(x-data="{ time: new Date("+log["time"]+"* 1000).toString() }" x-text="time")
                                 if log["status"]

@@ -2,10 +2,14 @@ extends include/layout.pug
 
 block content
     div.text-center.mt-5.px-3
-        h1.display-5.fw-bold.text-body-emphasis Main Menu
+        h1.display-5.fw-bold.text-body-emphasis.mb-5 Latest Activity
 
-        div.col-lg-6.mx-auto
-            p.lead.mb-4 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse deleniti aspernatur optio fugiat culpa sapiente, quia veniam, qui, id accusamus quidem? Laboriosam, voluptates. Minus mollitia officiis, quia quasi debitis culpa?
-            div.d-grid.gap-2.d-sm-flex.justify-content-sm-center
-                a.btn.btn-primary.btn-lg.px-4.gap-3(href =url_for("users")) View all Users
-                a.btn.btn-outline-secondary.btn-lg.px-4(href =url_for("cards")) View all Cards
+        ul.list-group(x-cloak)
+            each log in log_data["data"]["logs"][::-1]
+                li.list-group-item.-group.d-flex.justify-content-between.align-items-center
+                    p.my-1.d-none.d-md-block(x-data="{ time: new Date("+log["time"]+"* 1000).toString() }" x-text="time")
+                    a.my-1.fw-bold.text-decoration-none(href=url_for("card", card_id=log["UID"])) UID: #{log["UID"]}
+                    if log["status"]
+                        span.badge.text-bg-success Online
+                    else
+                        span.badge.text-bg-danger Offline

@@ -3,12 +3,9 @@ extends include/layout.pug
 block content
     h1.display-3.text-center= title
     div.container
-        if postion_data["data"]["positions"]
-            form.d-flex.mb-3(method='POST' role="search")
-                input.form-control.me-2(type="search" name="search" placeholder="Search" aria-label="Search")
-                button.btn.btn-outline-success(type="submit") Search
+        if postion_data
             ul.list-group.small-box.mx-auto
-                each postion in postion_data["data"]["positions"]
+                each postion in postion_data
                     li.list-group-item.fw-bold.d-flex.justify-content-between
                         a.fw-bold.text-decoration-none.align-self-center(href=url_for("postion", id=postion["ID"]))= postion["name"]
                         div.d-none.d-md-block
