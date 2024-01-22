@@ -31,7 +31,7 @@ block content
                     ul.list-group
                         each log in log_data["data"]["logs"]
                             li.list-group-item.-group.d-flex.justify-content-between.align-items-center
-                                span.my-1(x-data="{ time: new Date("+log["time"]+").toString() }" x-text="time")
+                                span.my-1(x-data="{ time: new Date("+log["time"]+"* 1000).toString() }" x-text="time")
                                 if log["status"]
                                     span.badge.text-bg-success Online
                                 else
