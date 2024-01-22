@@ -1,0 +1,18 @@
+extends include/layout.pug
+
+block content
+    div.container.mt-3
+        h1.display-6 Card Details
+
+        p.lead UID: #{card_data["data"]["card"]["UID"]}
+        if card_data["data"]["card"]["userID"]
+            p(style="margin-bottom: 20px;") Owned by: 
+                a.fw-bold.text-decoration-none(href=url_for("user", user_id=card_data["data"]["card"]["userID"])) #{owner_detail["data"]["user"]["first_name"]} #{owner_detail["data"]["user"]["last_name"]}
+
+block buttons
+    a.btn.btn-primary.btn-lg.px-4.gap-3.me-2.mb-2(href= url_for("update_card", card_id=card_data["data"]["card"]["UID"])) Update Card
+    a.btn.btn-danger.btn-lg.px-4.gap-3.me-2.mb-2(href= url_for("delete_card", card_id=card_data["data"]["card"]["UID"])) Remove Card
+    if card_data["data"]["card"]["userID"]
+        a.btn.btn-warning.btn-lg.px-4.gap-3.me-2.mb-2(href=url_for("remove_ownership", card_id=card_data["data"]["card"]["UID"])) Remove Ownership
+    else
+        a.btn.btn-success.btn-lg.px-4.gap-3.me-2.mb-2(href= url_for("grant_ownership")) Grant Ownership

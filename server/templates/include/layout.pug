@@ -1,0 +1,23 @@
+include include/head.pug
+
+block main
+    nav.navbar.navbar-expand-lg.bg-body-tertiary
+        div.container-fluid
+            span.navbar-brand.mb-0.h1 Zeitverwaltung
+            button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation")
+                span.navbar-toggler-icon
+            div.collapse.navbar-collapse#navbarNav
+                ul.navbar-nav
+                    li.nav-item
+                        a.nav-link(href =url_for("site")) Home
+                    li.nav-item
+                        a.nav-link(href =url_for("users")) Users
+                    li.nav-item
+                        a.nav-link(href =url_for("cards")) Cards
+                    li.nav-item
+                        a.nav-link(href =url_for("postions")) Postions
+    div
+        div
+            block content
+        div.fixed-bottom.container.pb-3
+            block buttons

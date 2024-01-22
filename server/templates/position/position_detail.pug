@@ -1,0 +1,11 @@
+extends include/layout.pug
+
+block content
+    div.container.mt-3
+        h1.display-6 Position Controls
+
+        p.lead Name: #{postion_data["data"]["position"]["name"]}
+
+block buttons
+    a.btn.btn-warning.btn-lg.px-4.gap-3.me-2.mb-2(href=url_for("update_postion", id=postion_data["data"]["position"]["ID"])) Update Position
+    a.btn.btn-danger.btn-lg.px-4.gap-3.me-2.mb-2(href=url_for("delete_postion", id=postion_data["data"]["position"]["ID"])) Remove Position

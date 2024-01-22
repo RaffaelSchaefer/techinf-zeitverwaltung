@@ -1,0 +1,12 @@
+extends include/layout.pug
+
+block content
+    div.container.mt-3
+        h1.display-5 Register a new Card
+
+        form(method='POST')
+            label.form-label(for="UID") Card UID
+            input.form-control#UID(type="text", placeholder="Enter UID" name="UID" aria-describedby="UIDHelp" required)
+            div.form-text#UIDHelp The UID is the unique identifier of your Card
+            br
+            button.btn.btn-primary.btn-lg.px-4.gap-3.me-2.mb-2(type="submit") Register Card

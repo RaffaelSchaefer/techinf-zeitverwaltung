@@ -1,0 +1,15 @@
+extends include/layout.pug
+
+block content
+    h1.display-3.text-center= title
+
+    div.container
+        if user_data
+            div.list-group.small-box.mx-auto
+                each user in user_data
+                    a.list-group-item.list-group-item-action.fw-bold(href=url_for("user", user_id=user["ID"])) #{user["first_name"]} #{user["last_name"]}
+        else
+            div.alert.alert-info.mx-auto(role="alert") There are no Users which fit the criteria
+
+block buttons
+    a.btn.btn-primary.btn-lg.px-4.gap-3.mb-2(href=url_for("create_user")) Create new user

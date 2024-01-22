@@ -1,0 +1,18 @@
+extends include/layout.pug
+
+block content
+    h1.display-3.text-center= title
+    div.container
+        if postion_data
+            ul.list-group.small-box.mx-auto
+                each postion in postion_data
+                    li.list-group-item.fw-bold.d-flex.justify-content-between
+                        a.fw-bold.text-decoration-none.align-self-center(href=url_for("postion", id=postion["ID"]))= postion["name"]
+                        div.d-none.d-md-block
+                            a.btn.btn-outline-warning.btn-lg.px-1.py-1(href=url_for("update_postion", id=postion["ID"])) Update Position
+                            a.btn.btn-outline-danger.btn-lg.px-1.py-1.ms-2(href=url_for("delete_postion", id=postion["ID"])) Remove Position
+        else
+            div.alert.alert-info.mx-auto(role="alert") There are no Positions
+
+block buttons
+    a.btn.btn-primary.btn-lg.px-4.gap-3.mb-2(href=url_for("create_postion")) Create new Position

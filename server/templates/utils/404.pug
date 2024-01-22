@@ -1,0 +1,9 @@
+include include/head.pug
+
+div.container.mt-3.d-flex
+    i.bi.bi-exclamation-triangle.display-1.mx-3.align-self-center.d-none.d-md-block
+    div
+        h1.display-3 404 Page not found
+
+        p.lead The requested URL was not found on this server 
+            a.fw-bold.text-decoration-none(href= url_for("site")) return to home

@@ -1,0 +1,16 @@
+extends include/layout.pug
+
+block content
+    div.container.mt-3
+        h1.display-5 Delete Position
+
+        if len != 0
+            p.lead The are still Users with the Position you need to remove them first before deleting it.
+            div.list-group.small-box.mx-auto
+                for user in user_data
+                    a.list-group-item.list-group-item-action.fw-bold(href=url_for("user", user_id=user["ID"])) #{user["first_name"]} #{user["last_name"]}
+
+block buttons
+    if len == 0
+        form(method='POST')
+            button.btn.btn-danger.btn-lg.px-4.gap-3.me-2.mb-2(type="submit") Delete Position

@@ -1,0 +1,12 @@
+extends include/layout.pug
+
+block content
+    div.container.mt-3
+        h1.display-5  Update Card 
+
+        form(method='POST')
+            label.form-label(for="new_id") Last Name
+            input.form-control#new_id(type="text", placeholder="Enter UID" name="new_id", value=card_id required)
+            div.form-text#UIDHelp The UID is the unique identifier of your Card
+            br
+            button.btn.btn-primary.btn-lg.px-4.gap-3.me-2.mb-2(type="submit") Update Card

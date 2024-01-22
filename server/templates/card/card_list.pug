@@ -1,0 +1,18 @@
+extends include/layout.pug
+
+block content
+    h1.display-3.text-center= title
+
+    div.container
+        if card_data["data"]["cards"]
+            form.d-flex.mb-3(method='POST' role="search")
+                input.form-control.me-2(type="search" name="search" placeholder="Search" aria-label="Search")
+                button.btn.btn-outline-success(type="submit") Search
+            div.list-group.small-box.mx-auto
+                each card in card_data["data"]["cards"]
+                    a.list-group-item.list-group-item-action.fw-bold(href=url_for("card", card_id=card["UID"]))= card["UID"]
+        else
+            div.alert.alert-info.mx-auto(role="alert") There are no Cards
+
+block buttons
+    a.btn.btn-primary.btn-lg.px-4.gap-3.mb-2(href=url_for("create_card")) Register a new card

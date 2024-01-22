@@ -1,0 +1,48 @@
+extends include/layout.pug
+
+block content
+    div.container.mt-3
+        h1.display-6 #{user_data["data"]["user"]["first_name"]} #{user_data["data"]["user"]["last_name"]} 
+            if user_data["data"]["user"]["active"]
+                    span.badge.text-bg-success Online
+                else
+                    span.badge.text-bg-danger Offline
+        div.row
+            div.col
+                ul.list-group
+                    li.list-group-item ID: #{user_data["data"]["user"]["ID"]}
+                    li.list-group-item Postion: #{user_data["data"]["user"]["position"]["name"]}
+                h2.h5.my-2 Cards
+                if user_data["data"]["user"]["cards"]
+                    div.list-group
+                        each card in user_data["data"]["user"]["cards"]
+                            a.list-group-item.list-group-item-action.fw-bold(href=url_for("card", card_id=card["UID"])) UID: #{card["UID"]}
+                else
+                    p User has no active Cards
+                h2.h5.my-2 Addresses
+                if user_data["data"]["user"]["addresses"]
+                    ul.list-group
+                        each address in user_data["data"]["user"]["addresses"]
+                            li.list-group-item= address["full_address"]
+                else
+                    p User has no know Address
+                h2.h5.my-2 Aktivität
+                if log_data["data"]["logs"]
+                    ul.list-group(x-cloak)
+                        each log in log_data["data"]["logs"][::-1]
+                            li.list-group-item.-group.d-flex.justify-content-between.align-items-center
+                                span.my-1(x-data="{ time: new Date("+log["time"]+"* 1000).toString() }" x-text="time")
+                                if log["status"]
+                                    span.badge.text-bg-success Online
+                                else
+                                    span.badge.text-bg-danger Offline
+
+                else
+                    p User has no Activity
+            div.col.mx-auto.d-none.d-lg-block
+                img.rounded(alt="avatar" style="height: 200px;" src="https://api.dicebear.com/7.x/initials/svg?seed="+user_data["data"]["user"]["first_name"]+" "+user_data["data"]["user"]["last_name"])
+
+block buttons
+    a.btn.btn-success.btn-lg.px-4.gap-3.me-2.mb-2(href=url_for("grant_ownership")) Grant Ownership
+    a.btn.btn-primary.btn-lg.px-4.gap-3.me-2.mb-2(href=url_for("update_user", user_id=user_data["data"]["user"]["ID"])) Update User
+    a.btn.btn-danger.btn-lg.px-4.gap-3.me-2.mb-2(href=url_for("delete_user", user_id=user_data["data"]["user"]["ID"])) Remove User

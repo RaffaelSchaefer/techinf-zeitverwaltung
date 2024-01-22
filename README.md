@@ -83,14 +83,8 @@ cd ./server
 docker build -t [image_name] .
 ```
 
-**3**: Image ID kopieren
+**3**: Docker Container starten
 
 ```bash
-docker images
-```
-
-**4**: Docker Container via ID starten
-
-```bash
- docker run -d -p 80:80 --name [container_name] [image_id]
+ docker run -d -p 80:80 --name [container_name] [image_name]
 ```

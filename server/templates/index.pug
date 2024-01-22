@@ -1,0 +1,15 @@
+extends include/layout.pug
+
+block content
+    div.text-center.mt-5.px-3
+        h1.display-5.fw-bold.text-body-emphasis.mb-5 Latest Activity
+
+        ul.list-group(x-cloak)
+            each log in log_data["data"]["logs"][::-1]
+                li.list-group-item.-group.d-flex.justify-content-between.align-items-center
+                    p.my-1.d-none.d-md-block(x-data="{ time: new Date("+log["time"]+"* 1000).toString() }" x-text="time")
+                    a.my-1.fw-bold.text-decoration-none(href=url_for("card", card_id=log["UID"])) UID: #{log["UID"]}
+                    if log["status"]
+                        span.badge.text-bg-success Online
+                    else
+                        span.badge.text-bg-danger Offline
