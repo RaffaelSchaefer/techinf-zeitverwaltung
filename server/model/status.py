@@ -49,9 +49,9 @@ class Status:
     def get_entry(userID: int) -> "Status":
         rows = SQLiteModel.get(
             "SELECT * FROM status WHERE userID = :userID", {"userID": userID})
-        return Status(rows[0][1], rows[0][0]) if rows else None
+        return Status(rows[0][0], rows[0][1]) if rows else None
 
     @staticmethod
     def get_entries() -> list["Status"]:
         rows = SQLiteModel.get("SELECT * FROM status")
-        return [Status(row[1], row[0]) for row in rows]
+        return [Status(row[0], row[1]) for row in rows]

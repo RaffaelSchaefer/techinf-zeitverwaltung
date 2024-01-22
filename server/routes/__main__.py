@@ -1,11 +1,10 @@
+import time
+
 from flask import Flask, request, jsonify, redirect, url_for, render_template
-
 from routes._utils import check_key, page_error_handling
-
 from controller import *
 
-api = Flask(__name__, template_folder="../templates",
-            static_folder="../static")
+api = Flask(__name__, template_folder="../templates", static_folder="../static")
 api.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
 
 # Util pages
@@ -24,7 +23,7 @@ def index():
 @api.route("/site")
 @page_error_handling
 def site():
-    return render_template('index.pug', title="Home", users=len(user_list()["data"]["users"]), cards=len(card_list()["data"]["cards"]))
+    return render_template('index.pug', title="Home")
 
 
 # User pages
@@ -39,7 +38,7 @@ def users():
 @api.route("/user/<user_id>")
 @page_error_handling
 def user(user_id):
-    return render_template('user/user_detail.pug', title="User Details", user_data=user_detail(user_id))
+    return render_template('user/user_detail.pug', title="User Details", user_data=user_detail(user_id), log_data=log_list(user_id))
 
 
 @api.route("/create-user", methods=['GET', 'POST'])
@@ -49,8 +48,7 @@ def create_user():
         data = request.form
         creates_user_id = user_create(
             data["first_name"], data["last_name"], int(data["position"]))
-        address_create(data["street_name"], data["house_number"], data["town_name"],
-                       data["postal_code"], data["country"], creates_user_id)
+        address_create(data["street_name"], data["house_number"], data["town_name"], data["postal_code"], data["country"], creates_user_id)
         status_create(creates_user_id)
         return redirect(url_for('users'))
     elif request.method == "GET":
@@ -236,6 +234,7 @@ def log():
                 return {"error": "Incorrect API Key"}, 401
             userID = card_detail(data["data"]["UID"])["data"]["card"]["userID"]
             status_update(userID)
+            log_create(userID, data["data"]["UID"], int(time.time()), status_detail(userID)["data"]["status"]["status"])
             return jsonify(data), 201
         except Exception as e:
             return {

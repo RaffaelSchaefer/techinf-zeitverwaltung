@@ -14,7 +14,7 @@ def log_list(userID: int = None) -> dict:
                 {
                     "UID": log.cardUID,
                     "ID": log.userID,
-                    "time": log.time,
+                    "time": str(log.time),
                     "status": log.status
                 }
                 for log in logs

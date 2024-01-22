@@ -26,6 +26,19 @@ block content
                             li.list-group-item= address["full_address"]
                 else
                     p User has no know Address
+                h2.h5.my-2 Aktivität
+                if log_data["data"]["logs"]
+                    ul.list-group
+                        each log in log_data["data"]["logs"]
+                            li.list-group-item.-group.d-flex.justify-content-between.align-items-center
+                                span.my-1(x-data="{ time: new Date("+log["time"]+").toString() }" x-text="time")
+                                if log["status"]
+                                    span.badge.text-bg-success Online
+                                else
+                                    span.badge.text-bg-danger Offline
+
+                else
+                    p User has no Activity
             div.col.mx-auto.d-none.d-lg-block
                 img.rounded(alt="avatar" style="height: 200px;" src="https://api.dicebear.com/7.x/initials/svg?seed="+user_data["data"]["user"]["first_name"]+" "+user_data["data"]["user"]["last_name"])
 
