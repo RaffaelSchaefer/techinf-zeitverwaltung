@@ -258,9 +258,13 @@ def log():
             if check_key(data["key"]) is False:
                 return {"error": "Incorrect API Key"}, 401
             userID = card_detail(data["data"]["UID"])["data"]["card"]["userID"]
-            status_update(userID)
-            log_create(userID, data["data"]["UID"], int(time.time()), status_detail(userID)["data"]["status"]["status"])
-            return jsonify(data), 201
+            user_logs = log_list(userID)["data"]["logs"][::-1]
+            if int(time.time()) >= int(user_logs[0]["time"]) + 20:
+                status_update(userID)
+                log_create(userID, data["data"]["UID"], int(time.time()), status_detail(userID)["data"]["status"]["status"])
+                return jsonify(data), 201
+            else:
+                raise Exception("Undercut minium Time requirement")
         except Exception as e:
             return {
                 "error": str(e)
