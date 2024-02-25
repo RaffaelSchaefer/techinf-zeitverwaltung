@@ -1,27 +1,24 @@
 \documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage[ngerman]{babel}
 \usepackage[a4paper, left=2.5cm, right=2cm, top=2cm, bottom=2cm]{geometry}
-\usepackage{setspace}
-\usepackage{titlesec}
-\usepackage{hyperref}
-\usepackage{url}
-\usepackage{graphicx}
-\usepackage{subcaption}
-\usepackage{subfiles}
-\usepackage{graphicx}
-\usepackage{subcaption}
-\usepackage{subfiles}
-\usepackage{setspace}
-\usepackage{dirtytalk}
+\usepackage[german]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{biblatex}
 \usepackage{csquotes}
-\usepackage{glossaries}
-\usepackage{multirow}
-\usepackage{graphicx}
-\usepackage[table,xcdraw]{xcolor}
-\usepackage{fontspec}
+\usepackage{dirtytalk}
 \usepackage{float}
+\usepackage{fontspec}
+\usepackage{glossaries}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{inputenc}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{setspace}
+\usepackage{subcaption}
+\usepackage{subfiles}
+\usepackage{titlesec}
+\usepackage{url}
+\usepackage[table,xcdraw]{xcolor}
 
 % Titel
 \title{Time Tracking System}
@@ -40,7 +37,6 @@
 % Section
 \titleformat{\section}[block]{\normalfont\Large\bfseries}{\thesection}{1em}{}
 \titlespacing*{\section}{0pt}{2\baselineskip}{0.5\baselineskip}
-
 % Subsection
 \titlespacing*{\subsection}{0pt}{0.5\baselineskip}{0.5\baselineskip}
 
@@ -49,7 +45,7 @@
 \maketitle
 \begin{figure}[b!]
      \includegraphics[width=\linewidth]{./images/logos/UCB Logo.png}
-     \label{fig:UCB Logo} %TODO Check if needed
+     \label{fig:UCB Logo}
 \end{figure}
 \newpage
 \tableofcontents
@@ -68,16 +64,8 @@
 
 \subfile{sections/entwicklung}
 
-\subfile{sections/tests}
+\subfile{sections/optimierung_zukunft}
 
-\subfile{sections/dokumentation}
-
-%Appendix
-
-\newpage
-\section{Appendix}
-\begin{appendix}
-    \printbibliography
-\end{appendix}
+\subfile{sections/appendix}
 
 \end{document}

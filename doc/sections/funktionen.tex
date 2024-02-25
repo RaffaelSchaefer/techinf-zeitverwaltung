@@ -6,80 +6,59 @@
 \subsection{Benutzerverwaltung}
 
 \subsubsection{Anlegen}
+Das Anlegen von Nutzern passiert über die Web-Benutzeroberfläche. Ein Nutzer wird über den Knopf \say{Create new User} in der Nutzerauflistung angelegt. Dafür werden folgende Daten benötigt: 
+
 \begin{itemize}
-  \item Administrator erstellt Benutzer.
-  \item NFC-Chips für Benutzerdaten beschreiben.
+  \item Vorname
+  \item Nachname
+  \item Adresse:
+  \begin{itemize}
+      \item Straßenname
+      \item Hausnummer
+      \item Ortsname
+      \item Postleitzahl
+      \item Land
+  \end{itemize}
+  \item Position
 \end{itemize}
+
+\noindent Falls eine Position fehlt, die der neue Nutzer erfüllen soll, kann sie innerhalb der Positionsanlegung erstellt werden. Ein Link zu der Positionsanlegung befindet sich innerhalb der des Formulars zur Nutzererstellung.
+Eine neue Karte kann auch per Weboberfläche angelegt werden. Dies geschieht ähnlich wie bei der Anlegung eines Nutzers, eine Karte wird unter dem Knopf \say{Create new Card} angelegt. Zur Erstellung einer Karte wird nur die UID gebraucht. Um eine Karte einem Nutzer zuzuweisen, muss man dann auf den Knopf namens \say{Grant onwership} drücken. Danach kann man eine verfügbare Karte einem beliebigen Nutzer zuweisen.
+Das Aktualisieren und Entfernen von Daten kann unter den jeweiligen Detailansichten passieren.
 
 \subsection{Authentifizierung}
 
-\subsubsection{NFC-Reading}
+\subsubsection{RFID Reader}
+
+Der User kann sich im System anmelden, via dem RFID Reader (ESP32F), dieser teilt dem Server mit welche NFC Karte sich eingeloggt hat und gibt gleichzeitig auch noch die unix epoch time mit.
+
+\subsection{Zeiterfassung (Erfassung des User-Verhaltens)} \label{Zeiterfassung}
+
+In der jetzigen Version des Projektes fällt die Zeiterfassung leider nur minimal aus. Das System speichert, wenn ein Nutzer sich an oder abmeldet und zeigt das in zwei Ansichten im Web-UI. Einmal gibt es eine große Auflistung auf der Hauptseite, welche Karten sich zuletzt an-/abgemeldet haben. Dann gibt es noch das Userprofil, welches grade den Status eines Nutzers zeigt und seine letzten An-/Abmeldungen. Folgende Daten werden in den jeweiligen Listen gezeigt:
+
 \begin{itemize}
-  \item Automatischer Login durch NFC-Chip.
-  \item Verifikation anhand gespeicherter Daten auf NFC-Chip.
+  \item Uhrzeit
+  \item Karten UID (nur in der Gesamtauflistung auf der Hauptseite)
+  \item Status(online/offline)
 \end{itemize}
 
-\subsection{Zeiterfassung}
-
-\subsubsection{Stempel}
-\begin{itemize}
-  \item RTC-Modul für Zeitstempel.
-  \item Berechnung der Arbeitsstunden.
-  \item \textbf{Alternative:} Integration einer API (timeAPI) für präzise Zeitdaten.
-\end{itemize}
+\noindent Die Zeiterfassung erfolgt über einen NTP Server, der in der Firmware des Node MCUs angesteuert wird. (siehe \ref{ZeitwerfassungEntwicklung}) Dazu wurde die \say{NTPClient.h} Bibliothek eingebunden und verwendet. Der in der Firmware angegebene \say{utcOffset} muss dabei nach aktuellem Stand der Firmware je nach Winter oder Sommerzeit manuell geändert werden.
 
 \subsection{Datenanzeige}
 
-\subsubsection{Berichte}
+Alle gesammelten Daten werden in der Weboberfläche dargestellt:
+
 \begin{itemize}
-  \item Monats- und Wochenberichte.
-  \item Letzter Login, Gesamtarbeitsstunden.
+  \item User Daten (Name, Wohnort, etc.)
+  \item RFID Karten
+  \item Positionen
+  \item Generierte Logs
 \end{itemize}
 
-\subsubsection{Benutzerdaten}
-\begin{itemize}
-  \item Eigene Daten einsehen.
-\end{itemize}
-
-\subsection{Urlaubs- und Abwesenheitsmanagement}
-
-\subsubsection{Anfragen}
-\begin{itemize}
-  \item Urlaubsanfragen über das System.
-  \item Manager approves/rejects Anfragen.
-\end{itemize}
-
-\subsection{Benutzerberechtigung}
-
-\subsubsection{Rollen}
-\begin{itemize}
-  \item Administrator, Manager, Benutzer.
-  \item Spezifische Berechtigungen pro Rolle.
-\end{itemize}
-
-\subsection{Cloud-Backup und Synchronisation}
-
-\subsubsection{Integration}
-\begin{itemize}
-  \item Cloud-Services (z.B. AWS, Google Cloud).
-  \item Sichere Datenübertragung und -speicherung.
-  \item Automatische Synchronisation.
-  \item Cloud-Backup für Benutzerdaten, Anmeldezeiten, Logs.
-\end{itemize}
+\noindent Für die meisten Daten gibt es zwei Ansichten, ein mal eine Auflistung aller Daten und einer Detailansicht, bei der man auch dann noch mehr Informationen bekommt und die Relationen zwischen den Daten sehen kann (zum Beispiel wem gehört welche Karte). Von dem Ansichtsmodell sind die generierten Logs ausgeschlossen (siehe \ref{Zeiterfassung}).
 
 \subsection{Sicherheit}
 
-\subsubsection{Verschlüsselung}
-\begin{itemize}
-  \item Schutz sensibler Daten.
-  \item Sichere NFC-Datenbehandlung.
-\end{itemize}
+Der Server wird vor falschen Log Einträgen via eines API-Keys geschützt, der bei jeder Anfrage mitgeschickt werden muss (siehe \ref{JSON-API}). Sonstige Schutzmaßnahmen sprengten leider den Scope des Projektes.
 
-\subsection{Protokollierung und Prüfung}
-
-\subsubsection{Protokolle}
-\begin{itemize}
-  \item Systemaktivitäten, Login und Logout, Fehler.
-  \item Prüfung durch Administrator.
-\end{itemize}
 \end{document}

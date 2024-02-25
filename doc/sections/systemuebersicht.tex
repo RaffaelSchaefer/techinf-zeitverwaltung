@@ -4,13 +4,15 @@
 \section{Systemübersicht}
 
 \subsection{Hardware}
-Unser Zeiterfassungssystem hat zwei Hauptkomponenten auf der Hardwareseite. Einmal NFC Chips welche in Karten eingebaut sind und ein Lesegerät welches auf dem IOT Octopus\footnote{\label{IOT Octopus}IOT Oktopus: \url{https://www.umwelt-campus.de/iot-werkstatt/community}} fußt, um die Karten auszulesen. Im folgenden Abschnitt wird der Aufbau dieser Komponenten weiter erläutert.
-\subsubsection{IOT Octopus mit NFC Reader Modul}
-\subsubsection{NFC Chips für Tags/Karten}
+Unser Zeiterfassungssystem besteht aus zwei Hardware basierten Hauptkomponenten. Zum einen aus einem RFID RC522 NFC Reader, der mit einem Node MCU vom Typ ESP8266 Mod 12-F kommuniziert. Zum anderen NFC Chips, welche in diversen NFC Tags oder Karten verbaut sind.
 
-\subsection{Benutzeroberfläche}
-\begin{itemize}
-  \item LCD/OLED display.
-  \item Navigation über Tasten.
-\end{itemize}
+\subsubsection{ESP8266 und RC522}
+Wir haben uns für den ESP8266 entschieden, da der IOT-Oktopus keine freien Schnittstellen für den RC522 geboten hat, ohne dabei gewisse Schnittstellen doppelt zu belegen, was eine unvorhersehbares Verhalten der am Oktopus verbauten LED oder des RFID Readers zufolge hatte.
+
+\subsubsection{Zusätzliche Komponenten}
+Um die passende Kommunikation zwischen ESP8266 und RFID RC522 NFC Reader zu gewährleisten wurde wurde eine Verbindungsplatine designt und im KI Labor mithilfe des dort vorhandenen Platinendruckers gefertigt. Zudem wird das System durch eine 3D gedruckte Hülle vor leichten Verschmutzungen geschützt und zusätzlich noch etwas ansehnlicher gestaltet. 
+
+\subsection{Software}
+lorem ipsum...
+
 \end{document}
