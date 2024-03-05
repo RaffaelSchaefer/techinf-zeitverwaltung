@@ -48,32 +48,34 @@ Zur Erstellung unseres Systems haben wir uns auf folgende JSON Struktur geeinigt
 \end{itemize}
 
 \subsection{Benutzeroberfläche}
-\begin{itemize}
-  \item Menüsystem, Bildschirme gestalten.
-\end{itemize}
 
-\subsection{Benutzerverwaltung/Authentifizierung}
-\begin{itemize}
-  \item Funktionen für Erstellung, NFC-Reading/Writing, Authentifizierung entwickeln.
-\end{itemize}
+Die Umsetzung der Benutzeroberfläche für unser Zeitverwaltungssystem wurde durch die Anwendung der Template Engine Pug realisiert, welche eine effiziente und elegante Möglichkeit bietet, HTML-Dateien zu generieren. Zur Gestaltung der Bedienelemente griffen wir auf Bootstrap zurück, eine bewährte Bibliothek für responsives Design und eine Vielzahl von vorgefertigten Komponenten. Darüber hinaus ermöglichte uns Alpine.js, dynamische Inhalte auf den Seiten nahtlos zu ändern und eine interaktive Benutzererfahrung zu schaffen. 
+Wir haben versucht, ein einheitliches Design über die Seiten verteilt zu verwenden. Auf der Startseite hat man eine Übersicht über alle Ein/-Abmeldungen. Für die Punkte, Nutzern, Karten und Positionen gibt es jeweilige Listen und Detailansichten. Um Daten anzulegen oder zu verändern, gibt es die passenden Formulare. Um Daten zu löschen, gibt es eine einheitliche Seite zur Bestätigung der Aktion. Das Farbschema ist bewusst irreführend gewählt, damit ein Nutzer länger braucht, um die Aktion zu vollenden, um fehl Entscheidungen zu minimieren.
+
+\subsection{Datenverwaltung/Datenbearbeitung}
+
+Nutzerdaten werden innerhalb der Webformulare erstellt und dann via den Control Schnittstellen in eine SQLite Datenbank eingetragen. Die Formulardaten werden via POST Request an die Route zurückgegeben und dort werden die Daten weiter gegeben an den Controller, der letztlich die richtige Funktion auf unserem Modell ausführt. Dieses Modell ist eine Abstraktion von unserer SQL Datenbank, welche die Entwicklung erleichtert und durch seine einheitlichen Schnittstellen Fehler verhindert. Die Modelle können alle CRUD Operationen ausführen auf dem Modell, Funktionsweisen, welche komplexer sind, sollten von Controller übernommen werden, um unnötige Komplexität zu verhindern.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/Datenbank Modell.png}
+    \caption{Entity Relationship Diagramm}
+    \label{fig:ER}
+    \centering
+\end{figure}
 
 \subsection{Zeiterfassung} \label{ZeitwerfassungEntwicklung}
-Zunächst wurden Nachforschungen betrieben, welche Möglichkeiten es gibt um eine zuverlässige Erfassung der Zeit zu gewährleisten. Neben diversen hardwarebasierten Erfassungsmethoden fiel Wahl schließlich auf eine softwarebasierte Erfassung. Dies umfasst die Zeitanfrage über eine Anfrage an einen Network Time Protocol Server.\\
-Der Vorteile der sich hieraus ergibt ist, dass keine weitere Hardware benötigt wird um die Zeit zu erfassen.\\ 
+Zunächst wurden Nachforschungen betrieben, welche Möglichkeiten es gibt, um eine zuverlässige Erfassung der Zeit zu gewährleisten. Neben diversen hardwarebasierten Erfassungsmethoden fiel Wahl schließlich auf eine softwarebasierte Erfassung. Dies umfasst die Zeitanfrage über eine Anfrage an einen Network Time Protokoll Server.\\
+Der Vorteile, der sich hieraus ergibt, ist, dass keine weitere Hardware benötigt wird, um die Zeit zu erfassen.\\ 
 Der größte Nachteil dieser Methode ist jedoch, dass zwangsläufig eine Netzwerkverbindung bestehen muss, um die Zeit vom NTP Server erhalten zu können.
 \subsubsection{Unix Epoch Time} 
 Die Zeit wird hierbei lediglich als Unix Timestamp, also der Anzahl an vergangenen Sekunden seit dem 1. Januar 1970, 00:00 Uhr UTC, erfasst und an den Server weitergegeben, da die Zeit dadurch einfach als Integer in der Datenbank hinterlegt werden kann. Hier kommt es jedoch zu Komplikationen der Zeiterfassung am 19. Januar 2038, da unsere Datenbank lediglich 32-Bit Integer speichert.
 
-
-\subsection{Datenanzeige}
-\begin{itemize}
-  \item Funktionen für Berichte und Benutzerdaten erstellen.
-\end{itemize}
+% Was ist der Unterschied von Datenanzeige und Darstellung
 
 \subsection{Sicherheit}
-\begin{itemize}
-  \item Verschlüsselung, sichere Datenbehandlung sicherstellen.
-\end{itemize}
+
+Um sicherzustellen, ob ein Zeiterfassungsgerät (ESP) auf den Server zu greifen darf, wird bei jeder Anfrage ein Schlüssel mitgegeben, der bei jeder „log“ Anfrage überprüft wird.
 
 \subsection{Protokollierung/Prüfung}
 \begin{itemize}
