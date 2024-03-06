@@ -22,7 +22,7 @@
 
 \subsection{Zeiterfassung}
 \begin{itemize} 
-    \item automatisierte Winter/Sommerzeit
+    \item automatisierte Winter/Sommerzeit %???
     \item offline Zeiterfassung
 \end{itemize}
 
@@ -32,14 +32,26 @@
     \item Server Cluster für Hochverfügbarkeit
 \end{itemize}
 
+\subsection{Server Architektur}
+\begin{itemize}
+    \item Postgres statt SQLite als Datenbank (Docker Container)
+    \item Aufteilung der Logischeneinheiten in Microservices (db, api, frontend)
+    \item Verwendung eines ORM statt selbst geschrieben SQL Befehlen
+    \item Frontend basierend auf einem modernen Web Framework (React, Vue, Svelte) (Client-Side Rendering)
+\end{itemize}
+
+\subsection{Features}
+\begin{itemize}
+    \item Chat Funktion via LLM (z.B. Llama2 oder Gemma)
+    \item Support für Microsoft Teams
+    \item Login System
+    \item Bessere Arbeitszeit Analyse und Visualisierung
+\end{itemize}
+
 \end{document}
 
 % Ideen von Raffael:
-% Aufteilung in Micro Services (db, api, frontend)
-% Postgres statt SQLite
 % Chat funktion via LLM (z.B Llama2 oder Gema via Ollama Docker Container)
-% ORM statt manuell geschiebenes SQL
-% Frontend nutzt Client side rendering
 % Support für Microsoft Teams
 % Login System
 % Bessere Arbeitszeil Analyse und Visualisierung

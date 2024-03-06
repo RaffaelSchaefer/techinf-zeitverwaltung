@@ -23,7 +23,7 @@ Das Gehäuse wurde innerhalb von Fusion 360 designt und dann mit PLA Filament 3D
 
 \begin{figure}[!ht]
     \includegraphics[width=\linewidth]{images/huellen_versionen.png}
-    \caption{Alle Versionen des Hüllen Designs}
+    \caption{Alle Versionen des Hüllendesigns}
     \centering
 \end{figure}
 
@@ -77,8 +77,8 @@ Die Zeit wird hierbei lediglich als Unix Timestamp, also der Anzahl an vergangen
 
 Um sicherzustellen, ob ein Zeiterfassungsgerät (ESP) auf den Server zu greifen darf, wird bei jeder Anfrage ein Schlüssel mitgegeben, der bei jeder „log“ Anfrage überprüft wird.
 
-\subsection{Protokollierung/Prüfung}
-\begin{itemize}
-  \item Funktionen für Protokollierung und Prüfung entwickeln.
-\end{itemize}
+\subsection{Protokollierung}
+
+Wenn ein Nutzer eine RFID Karte an das Lesegerät hält, erfasst der ESP die UID in der Karte. Danach macht der ESP eine POST Anfrage an den Server. Danach trägt der Server den erzeugten Eintrag in die Log-Tabelle. Ein Eintrag besteht aus der Epoch time der Karten UID, dem zu gehörigen User und den veränderten Status.
+
 \end{document}
