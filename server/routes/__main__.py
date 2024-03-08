@@ -259,7 +259,7 @@ def log():
                 return {"error": "Incorrect API Key"}, 401
             userID = card_detail(data["data"]["UID"])["data"]["card"]["userID"]
             user_logs = log_list(userID)["data"]["logs"][::-1]
-            if int(time.time()) >= int(user_logs[0]["time"]) + 20:
+            if not user_logs or int(time.time()) >= int(user_logs[0]["time"]) + 20:
                 status_update(userID)
                 log_create(userID, data["data"]["UID"], int(time.time()), status_detail(userID)["data"]["status"]["status"])
                 return jsonify(data), 201
