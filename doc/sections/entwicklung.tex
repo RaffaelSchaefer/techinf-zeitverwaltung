@@ -19,11 +19,12 @@ Zur Entwicklung der Verbindungsplatine wurde die Hardware zunächst auf einem Br
 
 \subsubsection{Hülle}
 
-Das Gehäuse wurde innerhalb von Fusion 360 designt und dann mit PLA Filament 3D gedruckt. Es hat mehrere Anläufe gebraucht um das richtige Design hinzubekommen.
+Das Gehäuse wurde innerhalb von Fusion 360 designt und dann mit PLA Filament 3D gedruckt. Es hat mehrere Anläufe gebraucht, um das richtige Design hinzubekommen.
 
-\begin{figure}[!ht]
-    \includegraphics[width=\linewidth]{images/huellen_versionen.png}
-    \caption{Alle Versionen des Hüllendesigns}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/Huelle-final.png}
+    \caption{Finale Version der Hülle}
     \centering
 \end{figure}
 
@@ -68,6 +69,7 @@ Nutzerdaten werden innerhalb der Webformulare erstellt und dann via den Control 
 Zunächst wurden Nachforschungen betrieben, welche Möglichkeiten es gibt, um eine zuverlässige Erfassung der Zeit zu gewährleisten. Neben diversen hardwarebasierten Erfassungsmethoden fiel Wahl schließlich auf eine softwarebasierte Erfassung. Dies umfasst die Zeitanfrage über eine Anfrage an einen Network Time Protokoll Server.\\
 Der Vorteile, der sich hieraus ergibt, ist, dass keine weitere Hardware benötigt wird, um die Zeit zu erfassen.\\ 
 Der größte Nachteil dieser Methode ist jedoch, dass zwangsläufig eine Netzwerkverbindung bestehen muss, um die Zeit vom NTP Server erhalten zu können.
+
 \subsubsection{Unix Epoch Time} 
 Die Zeit wird hierbei lediglich als Unix Timestamp, also der Anzahl an vergangenen Sekunden seit dem 1. Januar 1970, 00:00 Uhr UTC, erfasst und an den Server weitergegeben, da die Zeit dadurch einfach als Integer in der Datenbank hinterlegt werden kann. Hier kommt es jedoch zu Komplikationen der Zeiterfassung am 19. Januar 2038, da unsere Datenbank lediglich 32-Bit Integer speichert.
 
@@ -79,6 +81,6 @@ Um sicherzustellen, ob ein Zeiterfassungsgerät (ESP) auf den Server zu greifen 
 
 \subsection{Protokollierung}
 
-Wenn ein Nutzer eine RFID Karte an das Lesegerät hält, erfasst der ESP die UID in der Karte. Danach macht der ESP eine POST Anfrage an den Server. Danach trägt der Server den erzeugten Eintrag in die Log-Tabelle. Ein Eintrag besteht aus der Epoch time der Karten UID, dem zu gehörigen User und den veränderten Status.
+Wenn ein Nutzer eine RFID Karte an das Lesegerät hält, erfasst der ESP die UID in der Karte. Danach macht der ESP eine POST Anfrage an den Server. Anschließend trägt der Server den erzeugten Eintrag in die Log-Tabelle ein. Ein Eintrag besteht aus der Epoch Time, der Karten UID, dem zu gehörigen User und dem veränderten Status.
 
 \end{document}
