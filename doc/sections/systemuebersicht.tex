@@ -15,14 +15,14 @@ Um die passende Kommunikation zwischen ESP8266 und RFID RC522 NFC Reader zu gew�
 
 
 \subsection{Firmware}
-Die Firmware des ESP8266 steuert das Verhalten der Hardware. In dieser findet die Verbindung des ESPs mit einem geeigneten Router zur Herstellung einer aktiven Internetverbindung, der Zugriff auf einen geeigneten NTP Server und die Verarbeitung der vom RFID RC522 NFC Readers erhaltenen Signale statt. Essenzielle Daten, wie der API-Key oder die Verbindungsdaten zum gewünschten Router stehen hierbei nicht im Code selbst, sondern in den1 separat ausgelagerten Header-Dateien \say{api.h} und \say{credentials.h}.
+Die Firmware des ESP8266 steuert das Verhalten der Hardware. In dieser findet die Verbindung des ESPs mit einem geeigneten Router zur Herstellung einer aktiven Internetverbindung, der Zugriff auf einen geeigneten NTP Server und die Verarbeitung der vom RFID RC522 NFC Readers erhaltenen Signale statt. Essenzielle Daten, wie der API-Key oder die Verbindungsdaten zum gewünschten Router stehen hierbei nicht im Code selbst, sondern in den separat ausgelagerten Header-Dateien \say{api.h} und \say{credentials.h}.
 
 \subsubsection{Datenerfassung}
 Erhält der ESP8266 ein Signal vom RFID RC522, so wird mit diesem Signal die ID des NFC Tags übermittelt. Anschließend wird ein Update der Zeit vom NTP Server angefordert. Folglich werden die beiden erhaltenen Daten \say{ID} und \say{Zeit} zusammen mit dem API-Key in eine temporäre JSON-Datei verpackt und an den in der \say{api.h} eingetragenen Server übermittelt. 
 
 \subsection{Server}
 
-Der Server läuft über einen Docker Container und kann somit flexibel und überall gehostet werden. Die verwendeten Ports müssten aber noch manuell freigegeben werden, damit der Node MCU darauf zu greifen kann. Sonst kann auf die Software zu Testzwecken via Kommandozeile gestartet werden. Dabei ist wichtig, dass die Adresse wo der Server verfügbar ist auf 0.0.0.0 gesetzt wird, damit er auch im Ganzen Netz verfügbar ist.
+Der Server läuft über einen Docker Container und kann somit flexibel und überall gehostet werden. Die verwendeten Ports müssten aber noch manuell freigegeben werden, damit der Node MCU darauf zu greifen kann. Sonst kann auf die Software zu Testzwecken via Kommandozeile gestartet werden. Dabei ist wichtig, dass die Adresse des Server auf 0.0.0.0 gesetzt wird, damit er auch im Ganzen Netz verfügbar ist.
 
 \subsubsection{Aufbau}
 
