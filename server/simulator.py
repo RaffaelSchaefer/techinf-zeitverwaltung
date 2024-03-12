@@ -10,5 +10,7 @@ UIDs = [card["UID"] for card in cards]
 key = os.getenv('API_KEY')
 
 while True:
-    r = requests.post("http://localhost:9000/log", json={"key": key, "data": {"UID": random.choice(UIDs)}})
+    randomCard = random.choice(UIDs)
+    print("Card called: "+randomCard)
+    r = requests.post("http://localhost:9000/log", json={"key": key, "data": {"UID": randomCard}})
     time.sleep(60)
